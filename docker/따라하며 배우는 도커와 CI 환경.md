@@ -424,4 +424,351 @@ For more examples and ideas, visit:
 ![image](https://user-images.githubusercontent.com/93105083/184085996-5e36bbd5-75e7-49d9-ab4f-2beb4d8377e4.png)
 
 - `docker stop`
+    - 그동안 하던 작업들을 완료하고 컨테이너 중지
+    
+    **`docker run alpine ping localhost`**
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run alpine ping localhost**
+    PING localhost (127.0.0.1): 56 data bytes
+    64 bytes from 127.0.0.1: seq=0 ttl=64 time=0.044 ms
+    64 bytes from 127.0.0.1: seq=1 ttl=64 time=0.163 ms
+    64 bytes from 127.0.0.1: seq=2 ttl=64 time=0.112 ms
+    64 bytes from 127.0.0.1: seq=3 ttl=64 time=0.111 ms
+    64 bytes from 127.0.0.1: seq=4 ttl=64 time=0.184 ms
+    ```
+    
+    `**docker ps**`
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps**
+    CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS          PORTS     NAMES
+    703495e8493b   alpine    "ping localhost"   15 seconds ago   Up 13 seconds             focused_poincare
+    ```
+    
+    **`docker stop 703495e8493b`**
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % docker stop 703495e8493b
+    703495e8493b
+    ```
+    
 - `docker kill`
+    - 어떠한 것도 기다리지 않고 바로 컨테이너 중지
+    
+
+### 컨테이너 삭제하기
+
+- 먼저 중지를 시켜야 함
+
+```markdown
+chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps**
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps -a**
+CONTAINER ID   IMAGE         COMMAND            CREATED          STATUS                        PORTS     NAMES
+703495e8493b   alpine        "ping localhost"   15 minutes ago   Exited (137) 15 minutes ago             focused_poincare
+f4e96183418a   hello-world   "/hello"           4 hours ago      Exited (0) 4 hours ago                  flamboyant_carver
+1aa279dda3f0   alpine        "ping localhost"   5 hours ago      Exited (137) 5 hours ago                hungry_saha
+d99e6ca6b20d   hello-world   "ls"               5 hours ago      Created                                 gifted_grothendieck
+85b4ed95b2e5   alpine        "ls"               5 hours ago      Exited (0) 5 hours ago                  nervous_brattain
+21bc252ae387   hello-world   "/hello"           6 hours ago      Exited (0) 6 hours ago                  wizardly_allen
+e02ed6a01b1f   hello-world   "/hello"           3 days ago       Exited (0) 3 days ago                   determined_galileo
+
+chaewon@gimchaewon-ui-MacBookAir ~ % **docker rm 703495e8493b**
+703495e8493b
+
+chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps -a**
+CONTAINER ID   IMAGE         COMMAND            CREATED       STATUS                     PORTS     NAMES
+f4e96183418a   hello-world   "/hello"           4 hours ago   Exited (0) 4 hours ago               flamboyant_carver
+1aa279dda3f0   alpine        "ping localhost"   5 hours ago   Exited (137) 5 hours ago             hungry_saha
+d99e6ca6b20d   hello-world   "ls"               5 hours ago   Created                              gifted_grothendieck
+85b4ed95b2e5   alpine        "ls"               5 hours ago   Exited (0) 5 hours ago               nervous_brattain
+21bc252ae387   hello-world   "/hello"           6 hours ago   Exited (0) 6 hours ago               wizardly_allen
+e02ed6a01b1f   hello-world   "/hello"           3 days ago    Exited (0) 3 days ago                determined_galileo
+
+chaewon@gimchaewon-ui-MacBookAir ~ % docker rm **`docker ps -a -q`**
+f4e96183418a
+1aa279dda3f0
+d99e6ca6b20d
+85b4ed95b2e5
+21bc252ae387
+e02ed6a01b1f
+
+chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps -a**
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+- 중지된 도커 삭제: `docker rm 아이디/이름`
+- 모든 컨테이너 삭제: `docker rm `docker ps -a -q``
+- 도커 이미지 삭제: `docker rmi 이미지id`
+- 한 번에 컨테이너, 이미지, 네트워크 모두 삭제: `docker system prune`
+    - 도커를 쓰지 않을 때 모두 정리하고 싶은 경우 사용
+    - 실행중인 컨테이너에는 영향을 주지 않음
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run hello-world**
+    
+    Hello from Docker!
+    This message shows that your installation appears to be working correctly.
+    
+    To generate this message, Docker took the following steps:
+     1. The Docker client contacted the Docker daemon.
+     2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+        (arm64v8)
+     3. The Docker daemon created a new container from that image which runs the
+        executable that produces the output you are currently reading.
+     4. The Docker daemon streamed that output to the Docker client, which sent it
+        to your terminal.
+    
+    To try something more ambitious, you can run an Ubuntu container with:
+     $ docker run -it ubuntu bash
+    
+    Share images, automate workflows, and more with a free Docker ID:
+     https://hub.docker.com/
+    
+    For more examples and ideas, visit:
+     https://docs.docker.com/get-started/
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps -a**
+    CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                      PORTS     NAMES
+    7faba6ac82c3   hello-world   "/hello"   4 seconds ago    Exited (0) 3 seconds ago              stoic_ptolemy
+    3eb4ab2cc185   hello-world   "/hello"   50 seconds ago   Exited (0) 49 seconds ago             gallant_varahamihira
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker system prune**
+    WARNING! This will remove:
+      - all stopped containers
+      - all networks not used by at least one container
+      - all dangling images
+      - all dangling build cache
+    
+    Are you sure you want to continue? [y/N] y   
+    Deleted Containers:
+    7faba6ac82c32be8be19b14d1283bc9485e933fcc8e1f747d4499b895076434e
+    3eb4ab2cc1858591abaa5a62e2082724f162600fe6c605ca5607556592b78af0
+    
+    Total reclaimed space: 0B
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps -a**
+    CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+    ```
+    
+
+### 실행 중인 컨테이너에 명령어 전달
+
+**이미 실행중인 컨테이너에 명령어를 전달하고 싶은 경우**
+
+- `docker exec 컨테이너아이디`
+- 터미널1
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run alpine ping localhost**
+    PING localhost (127.0.0.1): 56 data bytes
+    64 bytes from 127.0.0.1: seq=0 ttl=64 time=0.520 ms
+    64 bytes from 127.0.0.1: seq=1 ttl=64 time=0.150 ms
+    64 bytes from 127.0.0.1: seq=2 ttl=64 time=0.106 ms
+    64 bytes from 127.0.0.1: seq=3 ttl=64 time=0.210 ms
+    64 bytes from 127.0.0.1: seq=4 ttl=64 time=0.184 ms
+    64 bytes from 127.0.0.1: seq=5 ttl=64 time=0.199 ms
+    64 bytes from 127.0.0.1: seq=6 ttl=64 time=0.189 ms
+    64 bytes from 127.0.0.1: seq=7 ttl=64 time=0.188 ms
+    64 bytes from 127.0.0.1: seq=8 ttl=64 time=0.178 ms
+    64 bytes from 127.0.0.1: seq=9 ttl=64 time=0.111 ms
+    64 bytes from 127.0.0.1: seq=10 ttl=64 time=0.197 ms
+    64 bytes from 127.0.0.1: seq=11 ttl=64 time=0.289 ms
+    ...
+    ```
+    
+- 터미널2
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps**
+    CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS          PORTS     NAMES
+    c4fbdf915d65   alpine    "ping localhost"   51 seconds ago   Up 50 seconds             epic_elion
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker exec c4fbdf915d65 ls**
+    bin
+    dev
+    etc
+    home
+    lib
+    media
+    mnt
+    opt
+    proc
+    root
+    run
+    sbin
+    srv
+    sys
+    tmp
+    usr
+    var
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run alpine ls**
+    bin
+    dev
+    etc
+    home
+    lib
+    media
+    mnt
+    opt
+    proc
+    root
+    run
+    sbin
+    srv
+    sys
+    tmp
+    usr
+    var
+    ```
+    
+    - `docker exec c4fbdf915d65 ls` : `docker run alpine ls`과 똑같은 결과
+- `docker run` vs `docker exec`
+    - `docker run` : 새로 컨테이너를 만들어서 실행
+    - `docker exec` : 이미 실행중인 컨테이너에 명령어 전달
+    
+
+### 레디스를 이용한 컨테이너 이해
+
+- 레디스 서버가 먼저 작동하고 있어야 함 → 그 후 레디스 클라이언트 실행 후 명령어를 레디스 서버에 전달
+- 레디스 클라이언트(redis-cli)를 통해 서버(docker run redis)에 명령어(set value1 hello) 전달
+
+- 터미널1
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run redis**
+    Unable to find image 'redis:latest' locally
+    latest: Pulling from library/redis
+    a9fe95647e78: Pull complete 
+    d633f0d49103: Pull complete 
+    02b2c9411454: Pull complete 
+    edf75a5169a5: Pull complete 
+    916009909ae8: Pull complete 
+    a15eebd8670a: Pull complete 
+    Digest: sha256:9bc34afe08ca30ef179404318cdebe6430ceda35a4ebe4b67d10789b17bdf7c4
+    Status: Downloaded newer image for redis:latest
+    1:C 11 Aug 2022 09:58:23.553 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+    1:C 11 Aug 2022 09:58:23.553 # Redis version=7.0.4, bits=64, commit=00000000, modified=0, pid=1, just started
+    1:C 11 Aug 2022 09:58:23.553 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+    1:M 11 Aug 2022 09:58:23.553 * monotonic clock: POSIX clock_gettime
+    1:M 11 Aug 2022 09:58:23.554 * Running mode=standalone, port=6379.
+    1:M 11 Aug 2022 09:58:23.554 # Server initialized
+    1:M 11 Aug 2022 09:58:23.555 * Ready to accept connections
+    ```
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **redis-cli**
+    zsh: command not found: redis-cli
+    ```
+    
+    - 원인
+        
+        ![image](https://user-images.githubusercontent.com/93105083/184278499-1b30ac42-4b73-41bf-baf6-e609e715c72a.png)
+        
+        - 레디스 클라이언트가 레디스 서버가 있는 컨테이너 밖에서 실행을 하려 함 → 레디스 서버에 접근 불가 ⇒ 레디스 클라이언트 작동 시 에러 발생
+        - ⇒  레디스 클라이언트도 컨테이너 안에서 실행해야 함
+
+- 해결
+    
+    ![image](https://user-images.githubusercontent.com/93105083/184278542-4d2aafe1-a5e8-44ce-94e0-ed28e8966c54.png)
+    
+    - 이렇게 해야함
+    - → `docker exec -it 컨테이너아이디 redis-cli`
+        - `exec`: 실행중인 컨테이너에 명령어 전달
+        - `-it` : 명령어를 실행한 후 계속 명령어를 적을 수 있음
+            - `-i`(interactive) : 상호적인
+            - `-t` : terminal
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps**  
+    CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS      NAMES
+    7a398d1a9ba9   redis     "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   6379/tcp   clever_visvesvaraya
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker exec -it 7a398d1a9ba9 redis-cli**
+    127.0.0.1:6379> **set key1 hello**
+    OK
+    127.0.0.1:6379> **get key1**
+    "hello"
+    ```
+    
+
+### 실행중인 컨테이너에서 터미널 생활 즐기기
+
+- 실행 중인 컨테이너에 명령어 전달할 때마다 `docker exec -it 컨테이너아이디 명령어` 를 입력하는 건 너무 번거로움
+- 그래서 컨테이너 안에 쉘이나 터미널 환경으로 접속해 줌으로써 문제 해결
+    
+    `docker exec -it 컨테이너아이디 **sh**`
+    
+    - 이미지에 따라
+        - sh (윈도우, 맥)
+        - bash (맥)
+        - zsh (맥)
+        - powershell (윈도우)
+    - 빠져 나오려면 **ctrl+d**
+- 터미널1
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker run alpine ping localhost**
+    PING localhost (127.0.0.1): 56 data bytes
+    64 bytes from 127.0.0.1: seq=0 ttl=64 time=0.044 ms
+    64 bytes from 127.0.0.1: seq=1 ttl=64 time=0.163 ms
+    64 bytes from 127.0.0.1: seq=2 ttl=64 time=0.112 ms
+    64 bytes from 127.0.0.1: seq=3 ttl=64 time=0.111 ms
+    64 bytes from 127.0.0.1: seq=4 ttl=64 time=0.184 ms
+    ```
+    
+- 터미널2
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker ps**
+    CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS          PORTS     NAMES
+    c8dc4b242361   alpine    "ping localhost"   34 seconds ago   Up 33 seconds             nostalgic_chatelet
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker exec -it c8dc4b242361 ls**
+    bin    etc    lib    mnt    proc   run    srv    tmp    var
+    dev    home   media  opt    root   sbin   sys    usr
+    
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker exec -it c8dc4b242361 echo "hello"**
+    hello
+    ```
+    
+    ```markdown
+    chaewon@gimchaewon-ui-MacBookAir ~ % **docker exec -it c8dc4b242361 sh**
+    / # **ls**
+    bin    etc    lib    mnt    proc   run    srv    tmp    var
+    dev    home   media  opt    root   sbin   sys    usr
+    / # **echo "hello"**
+    hello
+    / # **touch new-file**
+    / # **ls**
+    bin       etc       lib       mnt       opt       root      sbin      sys       usr
+    dev       home      media     **new-file**  proc      run       srv       tmp       var
+    / # **export hello=hi**
+    / # **echo $hello**
+    hi
+    ```
+    
+
+## 직접 도커 이미지를 만들어 보기
+
+- 현재까지 도커 이미지는 항상 도커 허브에 있는 것들만 사용
+- 하지만 도커 이미지를 직접 만들 수도 있고 직접 만든 이미지를 도커 허브에 올려 공유도 가능
+- 도커 이미지를 이용해 도커 컨테이너 생성: `docker create 이미지이름`
+    
+    ![image](https://user-images.githubusercontent.com/93105083/184278587-54805f20-fb6b-4662-afb3-22aabf40ea37.png)
+    
+    - 컨테이너는 도커 이미지로 생성
+
+**도커 이미지 생성하는 순서**
+
+1. Dockerfile 작성
+    - Dockerfile: 도커 이미지를 만들기 위한 설정 파일
+    - 컨테이너가 어떻게 행동해야 하는지에 대한 설정 정의
+2. 도커 클라이언트
+    - 도커 파일에 입력된 것들이 도커 클라이언트에 전달되어야 함
+3. 도커 서버
+    - 도커 클라이언트에 전달된 모든 중요한 작업들을 하는 곳
+4. 이미지 생성
