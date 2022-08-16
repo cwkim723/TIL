@@ -776,3 +776,202 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 3. 도커 서버
     - 도커 클라이언트에 전달된 모든 중요한 작업들을 하는 곳
 4. 이미지 생성
+
+
+
+### Dockerfile 만들기
+
+- 도커 이미지 = 시작시 실행될 명령어 + 파일 스냅샷
+
+**도커 파일 만드는 순서 (도커 이미지가 필요한 게 무엇인지 생각하기)**
+
+1. 베이스 이미지 명시(파일 스냅샷)
+2. 추가적으로 필요한 파일을 다운받기 위한 몇가지 명령어 명시(파일 스냅샷)
+3. 컨테이너 시작 시 실행될 명령어 명시 (시작 시 실행될 명령어)
+
+**베이스 이미지**
+
+![image](https://user-images.githubusercontent.com/93105083/184800023-5cfe057f-a247-4567-ae7c-6b50b682f3a7.png)
+
+- 도커 이미지는 여러개의 레이어로 구성
+    - 베이스 이미지: 이 이미지의 기반이 되는 부분
+    - 레이어: 중간 단계 이미지
+- 이미지에 무엇인가를 추가 → 레이어를 추가하는 것임(레이어 캐싱)
+
+**도커 파일 만들기**
+
+- 목표: hello 문구 출력
+
+```docker
+# 베이스 이미지 명시
+FROM baseImage
+
+# 추가적으로 필요한 파일들을 다운로드 받는다.
+RUN command
+
+# 컨테이너 시작 시 실행될 명령어를 명시
+CMD ["executable"]
+```
+
+- FROM
+    - 이미지 생성 시 기반이 되는 이미지 레이어(베이스 이미지)
+    - `이미지이름 태그` 형식으로 작성
+    - 태그를 안 붙이면 자동적으로 가장 최신 것으로 다운
+- RUN
+    - 도커 이미지가 생성되기 전에 수행할 쉘 명령어
+- CMD
+    - 컨테이너가 시작되었을 때 실행할 실행 파일 또는 쉘 스크립트
+    - 해당 명령어는 Dockerfile 내 1회만 가능
+
+**순서**
+
+1. 도커 파일을 만들 폴더 하나 만들기 ex.dockerfile-folder
+2. 방금 생성한 도커 파일 폴더를 에디터를 이용해 실행(vsc 추천)
+3. 파일 하나 생성(이름은 **Dockerfile**)
+4. 그 안에 먼저 어떻게 진행해 나갈지 기본적인 토대를 명시
+5. 베이스 이미지부터 실제 값으로 추가
+6. 베이스 이미지는 ubuntu, centos 등 가능, hello를 출력하는 기능은 사이즈가 작은 거 써도 돼서 alpine 베이스 이미지 사용
+7. 마지막으로 컨테이너 시작 시 실행될 명령어 `echo hello` 적어줌
+
+**완성**
+
+```docker
+# 베이스 이미지 명시
+FROM alpine
+
+# 추가적으로 필요한 파일들을 다운로드 받는다.
+# RUN command
+
+# 컨테이너 시작 시 실행될 명령어를 명시
+CMD ["echo", "hello"]
+```
+
+### 도커 파일로 도커 이미지 만들기
+
+**도커 파일로 이미지 생성 절차**
+
+`Dockerfile → 도커 클라이언트 → 도커 서버 → 이미지`
+
+- 도커 파일에 입력된 것들이 도커 클라이언트에 전달되어서 도커 서버가 인식하도록 해야 함
+    - `docker build ./` 또는 `docker build .`
+        - Build 명령어는 해당 디렉토리 내에서 dockerfile이라는 파일을 찾아서 도커 클라이언트에 전달
+        - docker build 뒤에 ./ 와 . 는 둘 다 현재 디렉도리를 의미
+
+**실습**
+
+1. 알파인 이미지 빌드(**a6215f271958**~)
+    
+    ![image](https://user-images.githubusercontent.com/93105083/184800068-1f7676e7-2e65-4580-aa1d-256f17d94097.png)
+    
+    ```docker
+    chaewon@gimchaewon-ui-MacBookAir dockerfile-folder % **docker build ./**
+    Sending build context to Docker daemon  2.048kB
+    Step 1/2 : FROM alpine
+     ---> **a6215f271958** // alpine 이미지의 아이디
+    Step 2/2 : CMD ["echo", "hello"]
+     ---> Running in **86635c7cc595**
+    Removing intermediate container 86635c7cc595
+     ---> f608595dc08b
+    Successfully built **f608595dc08b**
+    ```
+    
+    - 하단의 에러가 뜬다면 [https://www.inflearn.com/course/따라하며-배우는-도커-ci/unit/52103?q=90166&category=questionDetail&tab=community](https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%A9%B0-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EB%8F%84%EC%BB%A4-ci/unit/52103?q=90166&category=questionDetail&tab=community)
+        
+        ```docker
+        chaewon@gimchaewon-ui-MacBookAir **dockerfile-folder % docker build .**
+        [+] Building 0.1s (5/5) FINISHED                                                                                                                                                              
+         => [internal] load build definition from Dockerfile                                                                                                                                     0.1s
+         => => transferring dockerfile: 243B                                                                                                                                                     0.0s
+         => [internal] load .dockerignore                                                                                                                                                        0.0s
+         => => transferring context: 2B                                                                                                                                                          0.0s
+         => [internal] load metadata for docker.io/library/alpine:latest                                                                                                                         0.0s
+         => CACHED [1/1] FROM docker.io/library/alpine                                                                                                                                           0.0s
+         => exporting to image                                                                                                                                                                   0.0s
+         => => exporting layers                                                                                                                                                                  0.0s
+         => => writing image sha256:5ca0388d811148445d859268d6937d18ccc332af12e618fcb3a7afd35b961a54                                                                                             0.0s
+        
+        Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+        chaewon@gimchaewon-ui-MacBookAir dockerfile-folder %
+        ```
+        
+
+2. 임시 컨테이너 생성(86635c7cc595~)
+    
+    ![image](https://user-images.githubusercontent.com/93105083/184800110-34c58722-e283-466a-b6af-112d7abde2f1.png)
+    
+    - 알파인 이미지가 가지고 있는 파일 스냅샷을 컨테이너의 하드 디스크에 저장
+    - `CMD ["echo", "hello"]` 부분을 컨테이너에 넣어줌
+    - 임시 컨테이너 완성
+        
+        ![image](https://user-images.githubusercontent.com/93105083/184800175-0e8693ee-7782-4ba7-bae2-dd31bd60d9a8.png)
+        
+
+3. Alpine 이미지(**f608595dc08b)**
+- 위에서 완성한 임시 컨테이너로 alpine 이미지 생성
+    
+    ![image](https://user-images.githubusercontent.com/93105083/184800238-b8da96a7-7bb8-4bb6-8516-2f3e5059120b.png)
+    
+
+⇒ 베이스 이미지에서 다른 종속성이나 새로운 커맨드를 추가할 때는 **임시 컨테이너를 만든 후 그 컨테이너를 토대로 새로운 이미지를 만듦. 그리고 그 임시 컨테이너는 지워줌**
+
+![image](https://user-images.githubusercontent.com/93105083/184800294-a0c1078a-8b9d-473b-8d1a-4c5299792426.png)
+
+```docker
+chaewon@gimchaewon-ui-MacBookAir dockerfile-folder % **docker run -it f608595dc08b** 
+hello
+chaewon@gimchaewon-ui-MacBookAir dockerfile-folder % **docker run -it hello-world**
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (arm64v8)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+chaewon@gimchaewon-ui-MacBookAir dockerfile-folder % **docker run -it busybox**
+Unable to find image 'busybox:latest' locally
+latest: Pulling from library/busybox
+98b248744137: Pull complete 
+Digest: sha256:ef320ff10026a50cf5f0213d35537ce0041ac1d96e9b7800bafd8bc9eff6c693
+Status: Downloaded newer image for busybox:latest
+/ # ^C
+/ #
+```
+
+- **f608595dc08b** 를 외워서 쓰기엔 너무 번거로움 → 이름을 주자!
+
+
+### 도커 이미지에 이름 주는 방법
+
+![image](https://user-images.githubusercontent.com/93105083/184800349-36a787ed-dc85-4520-aa64-e25049fe8bf7.png)
+
+
+- `docker build -t smileajw1004/hello:latest ./`
+
+```docker
+chaewon@gimchaewon-ui-MacBookAir dockerfile-folder % **docker build -t smileajw1004/hello:latest ./** 
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM alpine
+ ---> a6215f271958
+Step 2/2 : CMD ["echo", "hello"]
+ ---> Using cache
+ ---> f608595dc08b
+Successfully built f608595dc08b
+Successfully tagged smileajw1004/hello:latest
+chaewon@gimchaewon-ui-MacBookAir **dockerfile-folder % docker run -it smileajw1004/hello**
+hello
+```
