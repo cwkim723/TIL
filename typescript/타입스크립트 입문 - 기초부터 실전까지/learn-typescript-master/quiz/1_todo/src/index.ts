@@ -1,7 +1,21 @@
-let todoItems;
+// 방법 1. 타입 별칭
+// type Todo = {
+//   id: number,
+//   title: string,
+//   done: boolean
+// };
+
+// 방법 2. 인터페이스
+interface Todo {
+  id: number,
+  title: string,
+  done: boolean
+}
+
+let todoItems: Todo[];
 
 // api
-function fetchTodoItems() {
+function fetchTodoItems(): Todo[] {
   const todos = [
     { id: 1, title: '안녕', done: false },
     { id: 2, title: '타입', done: false },
@@ -11,40 +25,81 @@ function fetchTodoItems() {
 }
 
 // crud methods
-function fetchTodos() {
+function fetchTodos(): object[] {
   const todos = fetchTodoItems();
   return todos;
 }
 
-function addTodo(todo) {
+function addTodo(todo: Todo): void {
   todoItems.push(todo);
 }
 
-function deleteTodo(index) {
+function deleteTodo(index: number): void {
   todoItems.splice(index, 1);
 }
 
-function completeTodo(index, todo) {
+function completeTodo(
+  index: number, 
+  todo: Todo
+  ): void {
   todo.done = true;
+  // todo: object -> todo 안에 done이 있다는 것을 보장하지 못하고 있음
+
   todoItems.splice(index, 1, todo);
 }
 
 // business logic
-function logFirstTodo() {
+function logFirstTodo(): object {
   return todoItems[0];
 }
 
-function showCompleted() {
+function showCompleted(): object[] {
   return todoItems.filter(item => item.done);
+  /*
+    == 
+    return todoItems.filter(function(item) {
+      if(item.done) {
+        return item;
+      }
+    });
+  */
 }
+// filter(): array의 아이템 중에서 특정 조건만 필터링 함
+/*
+  let arr = [
+    { gender: 'male', name: 'john'},
+    { gender: 'female', name: 'sarah'},
+    { gender: 'male', name: 'james'},
+  ]
+
+  let filtered = arr.filter(function(item) {
+    if (item.gender === 'female') {
+      return item;
+    }
+  })
+
+  console.log(filtered);
+  // { gender: 'female', name: 'sarah'} 출력
+*/
 
 // TODO: 아래 함수의 내용을 채워보세요. 아래 함수는 `addTodo()` 함수를 이용하여 2개의 새 할 일을 추가하는 함수입니다.
-function addTwoTodoItems() {
+function addTwoTodoItems(): void {
   // addTodo() 함수를 두 번 호출하여 todoItems에 새 할 일이 2개 추가되어야 합니다.
+  const item1 = {
+    id: 4,
+    title: '아이템 4',
+    done: false
+  };
+  addTodo(item1);
+  addTodo({
+    id: 5,
+    title: '아이템 5',
+    done: false
+  });
 }
 
 // NOTE: 유틸 함수
-function log() {
+function log(): void {
   console.log(todoItems);
 }
 
