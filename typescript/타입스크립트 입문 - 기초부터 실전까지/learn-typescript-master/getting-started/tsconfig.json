@@ -1,0 +1,9 @@
+{
+    "compilerOptions": { // 컴파일 할 때 옵션
+        "allowJs": true,
+        "checkJs": true, // @ ts-check 와 같은 역할
+        "noImplicitAny": true
+    }
+}
+
+// tsc를 돌리면 이 컴파일 옵션으로 컴파일을 하게 됨
