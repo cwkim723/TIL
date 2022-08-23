@@ -109,6 +109,6 @@ function getShoppingItemOption<T extends keyof ShoppingItem>(itemOption: T): T {
     return itemOption;
 }
 getShoppingItemOption(10);
-getShoppingItemOption<string>('a');
+getShoppingItemOption<'name'>('a');
 // keyof: ~중에 한가지 키값만 제네릭임. => ShoppingItem에서 'name', 'price', 'stock' 중 하나만 제네릭으로 가능
 getShoppingItemOption("name");
