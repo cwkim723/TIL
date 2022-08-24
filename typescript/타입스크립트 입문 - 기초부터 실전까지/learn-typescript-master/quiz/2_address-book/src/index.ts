@@ -118,12 +118,19 @@ class AddressBook {
   /* ------------------------------------------------ */
 }
 
-let heroes = [
-  { name: 'Tony', age: 30 },
-  { name: 'Captain', age: 100 },
-];
-heroes.map(function (hero) {
-  return hero.name
-})
+var div = document.querySelector('div') as HTMLDivElement;
+// as ~ : 타입 단언
+if(div) {
+  div.innerText;
+}
 
-new AddressBook();
+
+// let heroes = [
+//   { name: 'Tony', age: 30 },
+//   { name: 'Captain', age: 100 },
+// ];
+// heroes.map(function (hero) {
+//   return hero.name
+// })
+
+// new AddressBook();

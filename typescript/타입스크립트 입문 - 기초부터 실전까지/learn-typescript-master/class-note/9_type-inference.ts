@@ -1,12 +1,12 @@
 // 타입 추론 기본 1
-var a = 'abc';
+// var a = 'abc';
 
-function getB(b = 10) {
-    var c = 'hi';
-    return b + c;
-}
+// function getB(b = 10) {
+//     var c = 'hi';
+//     return b + c;
+// }
 
-10 + '10' // 1010
+// 10 + '10' // 1010
 
 
 // 타입 추론 기본2
@@ -22,29 +22,29 @@ function getB(b = 10) {
 
 
 // 타입 추론 기본 3
-interface Dropdown<T> {
-    value: T;
-    title: string;
-}
+// interface Dropdown<T> {
+//     value: T;
+//     title: string;
+// }
 
-interface DetailedDropdown<K> extends Dropdown<K>{
-    description: string;
-    tag: K;
-    // extends Dropdown -> value, title이 여기에 추가됨
-}
+// interface DetailedDropdown<K> extends Dropdown<K>{
+//     description: string;
+//     tag: K;
+//     // extends Dropdown -> value, title이 여기에 추가됨
+// }
 
-var detailedItem: DetailedDropdown<string> = {
-    title: 'abc',
-    description: 'ab',
-    value: 'a',
-    tag: 'a'
-}
+// var detailedItem: DetailedDropdown<string> = {
+//     title: 'abc',
+//     description: 'ab',
+//     value: 'a',
+//     tag: 'a'
+// }
 
 
 // Best Common Type
 // 타입스크립트가 어떤식으로 해석하는지 방식
 // 가장 근접한 타입을 추론 -> 유니언으로 추론
-var arr = [1, 2, true, true, 'a'];
+// var arr = [1, 2, true, true, 'a'];
 
 
 
