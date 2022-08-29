@@ -107,3 +107,236 @@
 
     - 코틀린에선 new를 안씀
 
+
+## 2강) 코틀린에서 null을 다루는 방법
+
+1. 코틀린에서 Null 체크
+    
+    **자바**
+    
+    ```java
+    public boolean startWithA(String str) {
+    	return str.startsWith("A");
+    }
+    ```
+    
+    - str에 null이 들어오면 NPE
+    1. str이 null이면 exception
+        
+        ```java
+        public boolean startsWithA1(String str) {
+        	if (str == null) {
+        		throw new IllegalArgumentException("null이 들어옴");
+        	}
+        	return str.startsWith("A");
+        }
+        ```
+        
+    2. str이 null이면 null 반환
+        
+        ```java
+        public **Boolean** startsWithA2(String str) {
+        	if (str == null) {
+        		return null;
+        	}
+        	return str.startsWith("A");
+        }
+        ```
+        
+    3. str이 null인 경우 false 반환
+        
+        ```java
+        public boolean startsWithA3(String str) {
+        	if (str == null) {
+        		return false;
+        	}
+        	return str.startsWith("A");
+        }
+        ```
+        
+    
+    **코틀린**
+    
+    1. str이 null이면 exception
+        
+        ```kotlin
+        fun startsWithA1(str: String?): Boolean {
+        	if(str == null) {
+        		throw IllegalArgumentException("null이 들어옴")
+        	}
+        	return str.startsWith("A")
+        }
+        ```
+        
+    2. str이 null이면 null 반환
+        
+        ```kotlin
+        fun startsWithA2(str: String?): **Boolean?** {
+        	if(str == null) {
+        		return null
+        	}
+        	return str.startsWith("A")
+        }
+        ```
+        
+    3. str이 null인 경우 false 반환
+        
+        ```kotlin
+        fun startsWithA3(str: String?): Boolean {
+        	if(str == null) {
+        		return false
+        	}
+        	return str.startsWith("A")
+        	// 위에서 null이 아님을 판별해주면 아래에서는 null이 아니라고 판단해줌
+        }
+        ```
+        
+        - 위에서 null이 아님을 판별해주면 아래에서는 null이 아니라고 판단해줌
+    - **코틀린에서는 null이 가능한 타입을 완전히 다르게 취급함**
+        - null이 가능한 타입만을 위한 기능? ⇒ safe call, elvis
+2. safe call과 elvis 연산자
+    
+    **safe call**
+    
+    ```kotlin
+    val str: String? = "ABC"
+    str.length // 불가능
+    str?.length // 가능!!
+    ```
+    
+    - `str?.length` : str이 null이 아니면 length 값을 반환. str이 null이면 null을 반환
+
+   **Elvis 연산자**
+
+   ```kotlin
+   val str: String? = "ABC"
+   str?.length ?: 0
+   ```
+
+   - 앞의 결과가 null이면 뒤의 값을 사용
+   - `str?.length ?: 0`
+       - str.length가 null이면 0을 반환
+
+   - Elvis 연산은 early return에도 사용할 수 있음
+
+       **자바**
+
+       ```java
+       public long calculate(Long number) {
+         if(number == null) {
+            return 0;
+         }
+
+         // 다음 로직
+       }
+       ```
+
+       - long: 객체 타입의 long → null 반환을 못함.
+           - 그래서 Long인 number가 null이면 이걸 0으로 반환시켜줌
+           - ⇒ **early return validation**
+
+       **코틀린**
+
+       ```kotlin
+       fun calculate(number: Long?): Long {
+         number ?: return 0
+         // 다음 로직
+       }
+       ```
+
+       - **early return validation**을 간편하게 작성 가능
+   1. str이 null이면 exception
+
+       ```kotlin
+       fun startsWithA1(str: String?): Boolean {
+         return str?.startsWith("A")
+         ?: throw IllegalArgumentException("null이 들어옴")
+       }
+       ```
+
+   2. str이 null이면 null 반환
+
+       ```kotlin
+       fun startsWithA2(str: String?): **Boolean?** {
+         return str?.startsWith("A")
+       }
+       ```
+
+   3. str이 null인 경우 false 반환
+
+       ```kotlin
+       fun startsWithA3(str: String?): Boolean {
+         return str?.startsWith("A") ?: false
+       }
+       ```
+
+       ```kotlin
+       fun startsWithA3(str: String?): Boolean {
+         return str?.startsWith("A") ?: false
+       }
+       ```
+
+
+3. 널 아님 단언
+    
+    ```kotlin
+    fun startsWithA1(str: String?): Boolean {
+    	return str**!!**.startsWith("A")
+    }
+    ```
+    
+    - nullable type이지만 아무리 생각해도 null이 될 수 없는 경우
+
+   ```kotlin
+   fun startsWithA3(str: String?): Boolean {
+      return str!!.startsWith("A")
+   }
+   ```
+
+   - `str.startsWith("A")`은 null이 반환될 수 있음(str가 String?이기 때문). 하지만 이 함수의 리턴 타입은 Boolean이므로 null 리턴 불가 → 컴파일러 에러 발생
+   - 이럴 때 `str.startsWith("A")`가 null이 아니라고 단언(!!)해줌으로써 에러가 발생하지 않는 것임
+   - 혹시나 str!!에 null이 들어오게 되면 NPE(런타임 에러)가 나오기 때문에 null이 아닌게 확실한 경우만 `!!`을 써야 함
+
+4. 플랫폼 타입!!
+    - 코틀린에서 자바 코드를 가져다 사용할 때 어떻게 처리?
+    
+    **자바**
+    
+    ```java
+    public class Person {
+    	private final String name;
+    
+    	public Person(String name) {
+    		this.name = name;
+    	}
+    
+    	@Nullable
+    	public String getName() {
+    		return name;
+    	}
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    fun main() {
+    	val person = Person("공부하는 개발자")
+    	startsWithA(person.name) // 에러 발생
+    	// name은 @Nullable이기 때문
+    	// @NotNull이면 사용 가능
+    }
+    
+    fun startsWithA(str: String): Boolean {
+    	return str.startsWith("A")
+    	// str은 null이 아님
+    }
+    ```
+    
+    - 코틀린은 자바코드의 `@Nullable`을 이해할 수 있음
+    - **플랫폼 타입**
+        - 코틀린이 null 관련 정보를 알 수 없는 타입(`@Nullable` 혹은 `@NotNull`을 붙이지 않은 경우)
+        - 런타임 에러 발생 가능
+        
+
+## 3강) 코틀린에서 Type을 다루는 방법
