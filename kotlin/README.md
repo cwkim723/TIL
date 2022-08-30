@@ -339,4 +339,210 @@
         - 런타임 에러 발생 가능
         
 
-## 3강) 코틀린에서 Type을 다루는 방법
+### 3강) 코틀린에서 Type을 다루는 방법
+
+1. 기본 타입
+    - Byte, Short, **Int, Long, Float, Double**, 부호 없는 정수들
+    
+    **코틀린**
+    
+    - 선언된 기본값을 보고 타입 추론
+        
+        ```kotlin
+        val number1 = 3 // Int
+        val number2 = 3L // Long
+        val number3 = 3.0f // Float
+        val number4 = 3.0 // Double
+        ```
+        
+        - 3: Int, 3L: Long, 3.0f: Float, 3.0: Double
+        
+    - 코틀린: 기본 타입간의 변환은 **명시적**으로 이루어져야 함
+        
+        ```kotlin
+        val number1 = 4
+        val number2: Long = number1 // Type mismatch
+        ```
+        
+        - 에러 발생 → 컴파일 에러(Type mismatch)
+        - 해결 방법: `to변환타입()` 사용
+            
+            ```kotlin
+            val number1 = 4
+            val number2: Long = number1.toLong()
+            ```
+            
+            ```kotlin
+            val number1 = 3
+            val number2 = 5
+            val result = number1 / number2.toDouble()
+            ```
+            
+        
+    - 변수가 nullable이라면 적절한 처리 필요
+        
+        ```kotlin
+        val number1: Int? = 3
+        // val number2: Long = number1.toLong() // NPE 발생 가능
+        
+        val number2: Long = number1.toLong() ?: 0L // 적절한 처리
+        ```
+        
+    
+    **자바**
+    
+    - 자바: 기본 타입간의 변환은 **암시적**으로 이루어질 수 있음
+    
+    ```java
+    int number1 = 4;
+    long number2 = number1;
+    ```
+    
+    - int 타입의 값이 long타입으로 **암시적**으로 변경(더 큰 타입으로 암시적 변경)
+    
+2. 타입 캐스팅
+    
+    **자바**
+    
+    ```java
+    public static void printAgeIfPerson(Object obj) {
+    	if(obj instanceof Person) {
+    		Person person = (Person) obj;
+    	}
+    }
+    ```
+    
+    - `instanceof` : 변수가 주어진 타입이면 true, 그렇지 않으면 false
+    - `(Person)`: 주어진 타입을 해당 타입으로 변경
+    
+    **코틀린**
+    
+    ![스크린샷 2022-08-30 오후 12.35.38.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0e56f568-a254-4d89-aaa7-697f8c3e939e/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2022-08-30_%EC%98%A4%ED%9B%84_12.35.38.png)
+    
+    ```kotlin
+    fun printAgeIfPerson(obj: Any) {
+    	if(obj is Person) {
+    		val person = obj as Person // as Person은 생략 가능
+    	}
+    }
+    ```
+    
+    - `is`: 자바의`instanceof`과 동일, 변수가 `Person` 타입이면 true, 그렇지 않으면 false
+    - `obj as Person`
+        - 자바의 `(Person) obj`과 동일
+        - obj라는 변수를 Person타입으로 간주
+        - `as Person`은 생략 가능 ⇒ **스마트 캐스트**
+    - 만약 obj가 Person이 아니라는 코드를 작성하고 싶은 경우
+        - `obj !is Person`
+            - is 앞에 `!`를 붙이면 됨
+    - obj에 null이 들어올 수 있는 경우
+        
+        ```kotlin
+        fun printAgeIfPerson(obj: Any?) {
+        	val person = obj as Person
+        }
+        ```
+        
+        - obj = null인 경우 NPE 발생
+        - 해결 방법
+            
+            ```kotlin
+            fun printAgeIfPerson(obj: Any?) {
+            	val person = obj as? Person
+            }
+            ```
+            
+            ![스크린샷 2022-08-30 오후 12.36.38.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/03f06e14-ffc5-4de8-bda9-731b25c20f52/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2022-08-30_%EC%98%A4%ED%9B%84_12.36.38.png)
+            
+3. 코틀린의 3가지 특이한 타입
+    - Any, Unit, Nothing
+        - Any
+            - Java의 Object 역할(모든 객체 최상위 타입)
+            - 모든 Primitive Type의 최상위 타입도 Any
+            - Any 자체는 null을 포함하고 있지 않음. null 포함 시 Any?
+            - Any에 equals, hashCode, toString 존재
+        - Unit
+            - Java의 void와 동일한 역할
+            - void와 다르게 Unit은 그 자체로 타입인자로 사용 가능
+            - 단 하나의 인스턴스만 갖는 타입(실제 존재하는 타입)
+        - Nothing
+            - 함수가 정상적으로 끝나지 않았음을 표현
+            - 무조건 예외를 반환하는 함수 / 무한 루프 함수 등
+            
+            ```kotlin
+            fun fail(message: String): Nothing {
+            	throw IllegalArgumentException(message)
+            }
+            ```
+            
+4. String Interpolation, String indexing
+    
+    **자바**
+    
+    - 문자열 작성
+        
+        ```java
+        Person person = new Person("채원", 26);
+        String log = String.format("사람의 이름은 %s이고 나이는 $s세 입니다."
+        , person.getName(), person.getAge());
+        ```
+        
+    
+    - 여러 줄에 걸친 문자열 작성
+        
+        ```java
+        StringBuilder builder = new StringBuilder();
+        builder.append("사람의 이름은");
+        builder.append(person.getName());
+        builder.append("이고 나이는");
+        builder.append(person.getAge());
+        builder.append("세 입니다.");
+        ```
+        
+    
+    - 문자열의 특정 문자 가져오기
+        
+        ```java
+        String str = "ABCDE";
+        char ch = str.charAt(1);
+        ```
+        
+    
+    **코틀린**
+    
+    - 문자열 작성
+        
+        ```kotlin
+        val person = Person("채원", 26);
+        val log = "사람의 이름은 ${person.name}이고 나이는 ${person.age}세 입니다"
+        ```
+        
+        - `${변수}`
+        - `${변수}`를 사용하는 것이 **가독성**, **일괄 변환**, **정규식 활용** 측면에서 유리
+        
+        ```kotlin
+        val name = "채원"
+        val age = 26
+        val log = "사람의 이름: $name 나이: $age"
+        ```
+        
+        - `$변수`
+    
+    - 여러 줄에 걸친 문자열 작성
+        
+        ```kotlin
+        val withoutIndent = 
+        	"""
+        						ABC
+        						123
+        						456
+        	""".trimIndent()
+        ```
+        
+        - 여러줄에 걸친 문자열 작성 시 큰따옴표 세개(”””)
+        
+    - 문자열의 특정 문자 가져오기
+       ```kotlin
+         val str = "ABCDE"
+         val ch = str[1]
+         ```
