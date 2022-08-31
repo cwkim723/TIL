@@ -653,3 +653,323 @@
     
 
 ## 5강) 코틀린에서 제어문을 다루는 방법
+
+1. if문
+    
+    **자바**
+    ```java
+    private String getPassOrFail(int score) {
+    	if(score >= 50) {
+    		return "P";
+    	} else {
+    		return "F";
+    	}
+    }
+    ```
+    
+    **코틀린**
+    ```kotlin
+    fun getPassOrFail(score: Int) {
+    	if(score >= 50) {
+    		return "P"
+    	} else {
+    		return "F"
+    	}
+    }
+    ```
+    
+2. Expression과 Statement
+    - Statement: 프로그램의 문장, 하나의 값으로 도출되지 않음
+        - 자바에서 if-else는 Statement
+        - Statement 중에 하나의 값으로 도출되는 문장들이 Expression
+    - Expression: 하나의 값으로 도출되는 문장
+        - 코틀린에서 if-else는 Expression
+            
+            ```kotlin
+            fun getPassOrFail(score: Int): String {
+            	return if(score >= 50) {
+            		"P"
+            	} else {
+            		"F"
+            	}
+            }
+            ```
+            
+            - 코틀린에서는 if-else를 expression으로 사용할 수 있음 → 삼항 연산자 없음(필요 X)
+        
+        ```java
+        int score = 30 + 40;
+        ```
+        
+        - `30 + 40;` : Expression, Statement
+        
+        ```java
+        String grade = if(score >= 50) {
+        	"P";
+        } else {
+        	"F";
+        } // 에러 발생
+        ```
+        
+        - 에러 발생
+        - if() {}문을 통해 도출된 값을 String grade의 값으로 인정하지 않음 ⇒ Statement
+        
+        ```java
+        String grade = score >= 50 ? "P" : "F";
+        ```
+        
+        - 삼항 연산자는 하나의 값으로 취급하면서 에러가 없음 ⇒ Expression이면서 Statement
+    
+    - 어떠한 값이 특정 범위에 포함되어있는지 여부
+        
+        **자바**
+        
+        ```java
+        if(0 <= score && score <= 100){}
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        if(score in 0..100) {}
+        ```
+        
+3. switch와 when
+    
+    **자바의 switch**
+    
+    ```java
+    private String getGrageWithSwitch(int score) {
+    	switch(score / 10) {
+    		case 9:
+    			return "A";
+    		case 8:
+    			return "B";
+    		case 7:
+    			return "C";
+    		default:
+    			return "D";
+    	}
+    }
+    ```
+    
+    **코틀린의 when**
+    
+    ```kotlin
+    when (값) {
+    	조건부 -> 어떠한 구문
+    	조건부 -> 어떠한 구문
+    	else -> 어떠한 구문
+    }
+    ```
+    
+    ```kotlin
+    fun getGradeWithSwitch(score: Int): String {
+    	return when (score / 10) {
+    		9 -> "A"
+    		8 -> "B"
+    		7 -> "C"
+    		else -> "D"
+    	}
+    }
+    ```
+    
+    **자바**
+    
+    ```java
+    private boolean startsWithA(Object obj) {
+    	if (obj instanceof String) {
+    		return ((String) obj).startsWith("A");
+    	} else {
+    		return false;
+    	}
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    fun startsWithA(obj: Any): Boolean {
+    	return when (obj) {
+    		is String -> obj.startsWith("A");
+    		else -> false
+    	}
+    }
+    ```
+    
+- 여러개의 조건을 함께 검사
+    
+    **자바**
+    
+    ```java
+    private void judgeNumber(int number) {
+    	if(number == 1 || number == 0 || number == -1) {
+    		System.out.println("어디서 많이 본 숫자입니다.");
+    	} else {
+    		System.out.println("1, 0, -1이 아닙니다.");
+    	}
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    fun judgeNumber(number: Int) {
+    	when (number) {
+    		1, 0, -1 -> println("어디서 많이 본 숫자입니다.")
+    		else -> println("1, 0, -1이 아닙니다.")
+    	}
+    }
+    ```
+    
+- 값(`when(값)`)이 없는 경우
+    
+    **자바**
+    
+    ```java
+    private void judgeNumber2(int number) {
+    	if(number == 0) { 
+    		System.out.println("주어진 숫자는 0입니다.");
+    		return;
+    	}
+    
+    	if(number % 2 == 0) {
+    		System.out.println("주어진 숫자는 짝수입니다.");
+    		return;
+    	}
+    
+    	System.out.println("주어지는 숫자는 홀수입니다.");
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    fun judgeNumber2(number: Int) {
+    	when {
+    		number == 0 -> println("주어진 숫자는 0입니다.")
+    		number % 2 == 0 -> println("주어진 숫자는 짝수입니다.")
+    		else -> println("주어진 숫자는 홀수입니다.")
+    	}
+    }
+    ```
+    
+
+## 6강) **코틀린에서 반복문을 다루는 방법**
+
+1. for-each문
+    - 숫자가 들어 있는 리스트를 하나씩 출력
+        
+        **자바**
+        
+        ```java
+        List<Long> numbers = Arrays.asList(1L, 2L, 3L);
+        for (long number: numbers) {
+        	System.out.println(number);
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        val numbers = listOf(1L, 2L, 3L)
+        for (number in numbers) {
+        	println(number)
+        }
+        ```
+        
+
+2. 전통적인 for문
+- 1부터 3까지 출력하는 예제
+    
+    **자바**
+    
+    ```java
+    for(int i = 1; i <= 3; i++) {
+    	System.out.println(i);
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    for(i in 1..3) {
+    	println(i)
+    }
+    ```
+    
+- 내려가는 경우
+    
+    **자바**
+    
+    ```java
+    for(int i = 1; i >= 1; i--) {
+    	System.out.println(i);
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    for(i in 3 downTo 1) {
+    	println(i)
+    }
+    ```
+    
+- 2칸씩 내려가는 경우
+    
+    **자바**
+    
+    ```java
+    for(int i = 1; i <= 5; i+=2) {
+    	System.out.println(i);
+    }
+    ```
+    
+    **코틀린**
+    
+    ```kotlin
+    for(i in 1..5 step 2) {
+    	println(i)
+    }
+    ```
+    
+
+3. Progression과 Range
+- `..`연산자 : 범위를 만들어내는 연산자
+    - `1..3` : 1부터 3까지의 범위
+        
+        ```kotlin
+        for(i in 1..3) {
+        	println(i)
+        }
+        ```
+        
+        - Progression(등차수열)을 만들어내고 있음
+    - `3 downTo 1` : 시작값 3, 끝값 1, 공차가 -1인 등차수열
+        - 3, 2, 1
+    - `1..5 step 2` : 시작값 1, 끝값 5, 공차가 2인 등차수열
+        - 1, 3, 5
+- `downTo`, `step`도 함수(중위 호출 함수) : `변수 함수이름 argument`
+
+4. While문
+- 1부터 3을 출력하는 예제
+    
+    **자바**
+    
+    ```java
+    int i = 1;
+    while(i <= 3) {
+    	System.out.println(i);
+    	i++;
+    }
+    ```
+    
+    **코틀린**
+    ```kotlin
+   var i = 1
+   while (i <= 3) {
+      println(i)
+      i++
+   }
+   ```
