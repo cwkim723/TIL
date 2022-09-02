@@ -1298,4 +1298,684 @@
             - `*`: 스프레드 연산자
         
     
-    ## **9강) 코틀린에서 클래스를 다루는 방법**
+## **9강) 코틀린에서 클래스를 다루는 방법**
+
+1. 클래스와 프로퍼티
+    - 개명이 불가능한 나라에 사는 Person
+        
+        **자바**
+        
+        ```java
+        public class JavaPerson {
+        	private final String name;
+        	private int age;
+        
+        	public String getName() {
+        		return name;
+        	}
+        	
+        	public int getAge() {
+        		return age;
+        	}
+        	
+        	public void setAge(int age) {
+        		this.age = age;
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        class Person (
+        	name: String,
+        	age: Int
+        ) {
+        	val name = name
+        	var age = age
+        }
+        ```
+        
+        - getter, setter은 자동으로 만들어짐
+        
+        ```kotlin
+        class Person (
+        	name: String,
+        	age: Int
+        )
+        ```
+        
+        - 코틀린은 생성자를 만들 때 동시에 프로퍼티 선언 가능
+        
+        ```kotlin
+        fun main() {
+        	val person = Person("채원", 26)
+        	println(person.name) // 채원
+        	person.age = 10
+        	println(person.age) // 10
+        }
+        
+        class Person (
+        	val name: String,
+        	var age: Int
+        )
+        ```
+        
+        - 코틀린의 getter, setter는 `.필드` 를 이용
+        
+        ```kotlin
+        val javaPerson = JavaPerson("채원", 26)
+        println(javaPerson.name)
+        javaPerson.age = 10
+        println(javaPerson.age)
+        ```
+        
+        - 자바 클래스에 대해서도 `.필드`로 getter, setter 사용
+        
+2. 생성자와 init
+    - 클래스가 생성되는 시점에 나이 검증
+        
+        **자바**
+        
+        ```java
+        public class JavaPerson {
+        	private final String name;
+        	private int age;
+        
+        	**public JavaPerson(String name, int age) 
+        		if(this.age <= 0) {
+        			throw new IllegalArgumentException(String.format("나이는 %s일 수 없습니다.")
+        		}
+        		this.name = name;
+        		this.age = age;
+        	}**
+        
+        	public String getName() {
+        		return name;
+        	}
+        	
+        	public int getAge() {
+        		return age;
+        	}
+        	
+        	public void setAge(int age) {
+        		this.age = age;
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        class Person (
+        	val name: String,
+        	val age: Int
+        ) {
+        	**init {
+        		if(age <= 0) {
+        			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+        		}
+        	}**
+        }
+        ```
+        
+        - `init`: 생성자가 호출되는 시점에 호출됨
+            - 값을 적절히 만들어주거나 validation 로직을 넣거나 하는 용도로 사용
+    
+    - 최초로 태어나는 아기는 무조건 1살이니, 생성자를 하나 더 만들자
+        
+        **자바**
+        
+        ```java
+        public class JavaPerson {
+        	private final String name;
+        	private int age;
+        
+        	public JavaPerson(String name, int age) 
+        		if(this.age <= 0) {
+        			throw new IllegalArgumentException(String.format("나이는 %s일 수 없습니다.")
+        		}
+        		this.name = name;
+        		this.age = age;
+        	}
+        
+        	public JavaPerson(String name) 
+        		this(name, 1);
+        	}
+        
+        	... 생략
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun main() {
+        	val person = Person("채원")
+        }
+        
+        class Person (
+        	val name: String,
+        	val age: Int
+        ) {
+        	init {
+        		if(age <= 0) {
+        			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+        		}
+        	}
+        
+        	constructor(name: String): this(name, 1)
+        	// this로 위에 있는 val name, val age를 호출
+        }
+        ```
+        
+        - 주생성자(primary constructor)
+            
+            ```kotlin
+            class Person (
+            	val name: String,
+            	val age: Int
+            ) {
+            ```
+            
+            - 반드시 존재해야 함
+            - 주생성자에 파라미터가 하나도 없으면 생성 가능
+        
+        - 부생성자(secondary constructor)
+            
+            ```kotlin
+            constructor(name: String): this(name, 1) {
+            	println("첫 번째 부생성자")
+            } // 주생성자 호출
+            
+            constructor(): this("채원") {
+            	println("두 번째 부생성자")
+            } // 첫 번째 부생성자 호출
+            ```
+            
+            - 최종적으로 주생성자를 this로 호출해야 함
+            - body를 가질 수 있음
+            - 역순으로 실행(두번째 → 첫번째 → 주생성자)
+                
+                ```kotlin
+                fun main() {
+                	Person() // 두 번째 부 생성자 호출
+                }
+                
+                class Person (
+                	val name: String,
+                	val age: Int
+                ) {
+                	init {
+                		if(age <= 0) {
+                			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+                		}
+                		println("초기화 블록")
+                	}
+                
+                	constructor(name: String): this(name, 1) {
+                		println("첫 번째 부생성자")
+                	} // 주생성자 호출
+                	
+                	constructor(): this("채원") {
+                		println("두 번째 부생성자")
+                	} // 첫 번째 부생성자 호출
+                }
+                ```
+                
+                ```
+                초기화 블록
+                첫 번째 부생성자
+                두 번째 부생성자
+                ```
+                
+    - 코틀린은 부생성자 보다 default parameter를 선호
+        - Converting같은 경우 부생성자를 사용할 수 있지만 정적 팩토리 메소드 추천
+3. 커스텀 getter, setter
+    - 성인인지 확인
+        
+        **자바**
+        
+        ```java
+        public boolean isAdult() {
+        	return this.age >= 20;
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun main() {
+        }
+        
+        class Person (
+        	val name: String = "채원",
+        	var age: Int = 26
+        ) {
+        	init {
+        		if(age <= 0) {
+        			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+        		}
+        		println("초기화 블록")
+        	}
+        	
+        	**fun isAdult(): Boolean {
+        		return this.age >= 20
+        	}**
+        
+        	**val isAdult: Boolean
+        		get() = this.age >= 20
+        
+        	val isAdult: Boolean
+        		get() {
+        			this.age >= 20**
+        		}
+        }
+        ```
+        
+        - 직접 정의한 getter (프로퍼티처럼)
+            
+            ```kotlin
+            **val isAdult: Boolean
+            	get() = this.age >= 20**
+            ```
+            
+            ```kotlin
+            **val isAdult: Boolean
+            get() {
+            	this.age >= 20**
+            }
+            ```
+            
+        - 함수로 정의
+            
+            ```kotlin
+            **fun isAdult(): Boolean {
+            	return this.age >= 20
+            }**
+            ```
+            
+    
+    - Custom getter 사용 시 자기 자신 변형 가능
+    
+4. backing field
+    - name을 get할 때 무조건 대문자로 바꾸기
+        
+        ```kotlin
+        fun main() {
+        }
+        
+        class Person (
+        	name: String = "채원",
+        	var age: Int = 26
+        ) {
+        
+        	val name: String = name // get 자동 생성 방지로 여기에 써줌
+        		get() = field.uppercase() 
+        			
+        
+        	init {
+        		if(age <= 0) {
+        			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+        		}
+        		println("초기화 블록")
+        	}
+        
+        	****val isAdult: Boolean
+        		get() = this.age >= 20
+        ****
+        }
+        ```
+        
+        - `get() = name.uppercase()`
+            - name에 대한 getter 호출 -> name이라는 것은 name에 대한 getter 호출 -> 무한루프
+        - **backing field**
+            - 자기 자신을 가리키는 보이지 않는 field
+            - 잘 안 씀
+        
+        ```kotlin
+        val name: String = name
+        		get() = field.uppercase() 
+        ```
+        
+        - 이런식으로 처리 가능
+            
+            ```kotlin
+            val upperCaseName: String
+            		get() = this.name.uppercase() 
+            ```
+            
+            ```kotlin
+            fun getUppercaseName(): String = this.name.uppercase()
+            ```
+            
+            ```kotlin
+            fun getUppercaseName(): String {
+            	return this.name.uppercase()
+            }
+            ```
+            
+            - 셋 다 같은 함수
+            
+    - name을 set할 때 무조건 대문자로 바꾸기
+        
+        ```kotlin
+        fun main() {
+        }
+        
+        class Person (
+        	name: String = "채원",
+        	var age: Int = 26
+        ) {
+        
+        	**var name = name
+        		set(value) [
+        			field = value.uppercase()
+        		}**
+        
+        	init {
+        		if(age <= 0) {
+        			throw new IllegalArgumentException("나이는 ${age}일 수 없습니다")
+        		}
+        		println("초기화 블록")
+        	}
+        
+        	****val isAdult: Boolean
+        		get() = this.age >= 20
+        ****
+        }
+        ```
+        
+
+## **10강) 코틀린에서 상속을 다루는 방법**
+
+1. 추상 클래스
+    - Animal이란 추상클래스를 구현한 Cat, Penguin
+        
+        ![스크린샷 2022-09-02 오후 8.51.58.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d1697578-e7b6-40d4-bf90-f3ecb291085c/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2022-09-02_%EC%98%A4%ED%9B%84_8.51.58.png)
+        
+        - **Animal**
+            
+            **자바**
+            
+            ```java
+            public abstract class JavaAnimal {
+            	protected final String specied;
+            	protected final int legCount;
+            
+            	public JavaAnimal(String species, int legCount) {
+            		this.species = species;
+            		this.legCount = legCount;
+            	}
+            
+            	abstract public void move();
+            
+            	public String getSpecies() {
+            		return species;
+            	}
+            
+            	public int getLegCount() {
+            		return legCount;
+            	}
+            }
+            ```
+            
+            **코틀린**
+            
+            ```kotlin
+            abstract class Animal (
+            	protected val specied: String,
+            	protected open val legCount: Int,
+            ) {
+            
+            	abstract fun move()
+            
+            }
+            ```
+            
+            - 상속받은 클래스에서 해당 클래스의 프로퍼티를 오버라이드 할 수 있게 `open`을 붙여줌
+                - 추상 프로퍼티가 아니라면 `open` 필수
+        - **Cat**
+            
+            **자바**
+            
+            ```java
+            public class JavaCat extends JavaAnimal {
+            	public JavaCat(String specied) {
+            		super(species, 4);
+            	}
+            
+            	@Override
+            	public void move() {
+            		System.out.println("고양이가 사뿐 사뿐 걸어가~");
+            	}
+            }
+            ```
+            
+        
+        **코틀린**
+        
+        ```kotlin
+        class Cat(
+        	species: String
+        ) : Animal(species, 4) {
+        	
+        	**override** fun move() {
+        		println("고양이가 사뿐 사뿐 걸어가~")
+        	}
+        
+        }
+        ```
+        
+        - species를 받는 생성자 생김
+        - **상속 시 무조건 상위 클래스의 생성자를 바로 호출**
+            - Animal 클래스 상속 → Animal 클래스의 constructor도 불러줌
+        - override 필수로 붙여줘야 함
+        
+        - Penguin
+            
+            **자바**
+            
+            ```java
+            public final class JavaPenguin extends JavaAnimal {
+            	
+            	private final int wingCount;
+            
+            	public JavaPenguin(String species) {
+            		super(species, 2);
+            		this.wingCount = 2;
+            	}
+            
+            	@Override
+            	public void move() {
+            		System.out.println("펭귄이 움직입니다~ 꿱꿱");
+            	}
+            
+            	@Override
+            	public int getLegCount() {
+            		return super.legCount + this.wingCount;
+            	}
+            
+            }
+            ```
+            
+            **코틀린**
+            
+            ```kotlin
+            class Penguin(
+            	species: String
+            ) : Animal(specied, 2) {
+            	private val wingCount: Int = 2
+            
+            	override fun move() {
+            		println("펭귄이 움직입니다~ 꿱꿱")
+            	}
+            
+            	override val legCount: Int
+            		get() = super.legCount + this.wingCount
+            }
+            ```
+            
+            - 상위클래스에 접근: `super`
+
+1. 인터페이스
+    - Flyable과 Swimmable을 구현한 Penguin
+        
+        ![스크린샷 2022-09-02 오후 9.09.17.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bf4cdd8f-e72a-46da-b9d6-d0798485b5f8/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2022-09-02_%EC%98%A4%ED%9B%84_9.09.17.png)
+        
+        **자바**
+        
+        ```java
+        public interface JavaSwimable {
+        	default void act() {
+        		System.out.println("어푸 어푸");
+        	}
+        }
+        ```
+        
+        ```java
+        public interface JavaFlyable {
+        	default void act() {
+        		System.out.println("파닥 파닥");
+        	}
+        
+        	void fly();
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        interface Swimable {
+        	fun act() {
+        		println("어푸 어푸")
+        	}
+        }
+        ```
+        
+        ```kotlin
+        interface Flyable {
+        	fun act() {
+        		println("파닥 파닥")
+        	}
+        
+        	fun fly()
+        }
+        ```
+        
+    - 상속
+        
+        **자바**
+        
+        ```java
+        public final class JavaPenguin extends JavaAnimal implements JavaFlyable, JavaSwimable {
+        	@Override
+        	public void act() {
+        		**JavaSwimable.super.act();**
+        		**JavaFlyable.super.act();**
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        class Penguin(
+        	species: String
+        ) : Animal(specied, 2), Swimable, Flyable {
+        	private val wingCount: Int = 2
+        
+        	override fun move() {
+        		println("펭귄이 움직입니다~ 꿱꿱")
+        	}
+        
+        	override val legCount: Int
+        		get() = super.legCount + this.wingCount
+        
+        	**override fun act() {
+        		super<Swimable>.act()
+        		super<Flyable>.act()
+        	}**
+        }
+        ```
+        
+    - 자바, 코틀린 모두 인터페이스를 인스턴스화 할 수 없음
+    - 코틀린에서 backing field가 없는 프로퍼티를 인터페이스에 만들 수 있음
+2. 클래스를 상속할 때 주의할 점
+    
+    ![스크린샷 2022-09-03 오전 1.40.55.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d1d703a2-de74-4dac-b5f3-5d4e7022ff83/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2022-09-03_%EC%98%A4%EC%A0%84_1.40.55.png)
+    
+    ```kotlin
+    open class Base (
+    	open val number: Int = 100
+    ) {
+    
+    	init {
+    		println("Base Class")
+    		println(number)
+    	}
+    
+    }
+    ```
+    
+    - `open`으로 열어줘야 상속이 가능함
+    
+    ```kotlin
+    class Derived (
+    	**override** val number: Int
+    ) : Base(number) {
+    
+    	init {
+    		println("Derived Class")
+    	}
+    
+    }
+    ```
+    
+    ```kotlin
+    fun main() {
+    	Derived(300)
+    }
+    
+    open class Base (
+    	open val number: Int = 100
+    ) {
+    	init {
+    		println("Base Class")
+    		println(number)
+    	}
+    }
+    
+    class Derived (
+    	**override** val number: Int
+    ) : Base(number) {
+    	init {
+    		println("Derived Class")
+    	}
+    }
+    ```
+    
+    - 결과
+        
+        ```
+        Base Class
+        0
+        Derived Class
+        ```
+        
+        - 0이 나온 이유
+            - `Derived(300)`를 호출하면 우선 `Base()`부터 실행
+            - → 아직 Base의 생성자만 생긴 상태에서 number를 호출
+            - → 이 number는 Derived()에서 가져오는 것임
+            - 하지만 아직 Derived()에서 number가 초기화되지 않은 상태 → 0이 됨
+        - ⇒ **그렇기 때문에 상위 클래스의 constructor과 init에서는 하위 클래스의 field에 접근하면 안됨**
+        - **== > 상위 클래스 설계 시 생성자 또는 초기화 블록에 사용되는 프로퍼티에는 open을 피해야 함**
+3. 상속 관련 키워드 4가지
+    
+    1) final: override를 할 수 없게 함. default로 보이지 않게 존재
+    
+    2) open: override를 열어 줌
+    
+    3) abstract: 반드시 override 해야 함
+    
+    4) override: 상위 타입을 오버라이드 하고 있음
