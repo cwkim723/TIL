@@ -973,3 +973,329 @@
       i++
    }
    ```
+
+
+## **7강) 코틀린에서 예외를 다루는 방법**
+
+1. try catch finally 구문
+    - 주어진 문자열을 정수로 변경하는 예제
+        
+        **자바**
+        
+        ```java
+        private int parseIntOrThrow(@NotNull String str) {
+        	try {
+        		return Integer.parseInt(str);
+        	} catch (NumberFormatException e) {
+        		throw new IllegalArgumentException(String.format("주어진 %s는 숫자가 아닙니다", str));
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun parseIntOrThrow(str: String): Int {
+        	try {
+        		return str.toInt()
+        	} catch (e. NumberFormatException) {
+        		throw IllegalArgumentException("주어진 ${str}은 숫자가 아닙니다.")
+        	}
+        }
+        ```
+        
+        - 형변환 `to타입()` 사용
+        
+    - 주어진 문자열을 정수로 변경하는 예제. 실패하면 null을 반환
+        
+        **자바**
+        
+        ```java
+        private Integer parseIntOrThrowV2(@NotNull String str) {
+        	try {
+        		return Integer.parseInt(str);
+        	} catch (NumberFormatException e) {
+        		return null;
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun parseIntOrThrowV2(str: String) {
+        	return try {
+        		str.toInt()
+        	} catch (e: NumberFormatException) {
+        		null
+        	}
+        }
+        ```
+        
+    
+2. Checked Exception과 Unchecked Exception
+    - 프로젝트 내 파일의 내용물을 읽어오는 예제
+        
+        **자바**
+        
+        ```java
+        public void readFile() throws IOException {
+        	File currentFile = new File(".");
+        	File file = new File(currentFile.getAbsolutePath() + "/a.txt");
+        	BufferedReader reader = new BufferedReader(new FileReader(file));
+        	System.out.println(reader.readLine());
+        	reader.close();
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun readFile() {
+        	val currentFile = File(".")
+        	val file = File(currentFile.absolutePath + "/a.txt")
+        	val reader = BufferedReader(FileReader(file))
+        	println(reader.readLine())
+        	reader.close()
+        }
+        ```
+        
+        - `IOException`을 throws 하지 않았음에도 잘 돌아감
+            - **코틀린은** Checked Exception과 Unchecked Exception을 구분하지 않고 **모두 Unchecked Exception**으로 판별
+3. try with resources (JDK 7에서 추가)
+    - 프로젝트 내 파일의 내용물을 읽어오는 예제
+        
+        **자바**
+        
+        ```java
+        public void readFile(String path) throws IOException {
+        	try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+        		System.out.println(reader.readLine());
+        	}
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun readFile(path: String) {
+        	BufferedReader(FileReader(path))**.use** {
+        		reader ->
+        		println(reader.readLine())
+        	}
+        }
+        ```
+        
+        - 코틀린은 try with resources 구문이 없음
+            - use라는 inline 확장함수 사용
+        
+
+## 8강) 코틀린에서 함수를 다루는 방법
+
+1. 함수 선언 문법
+    - 두 정수를 받아 더 큰 정수를 반환
+        
+        **자바**
+        
+        ```java
+        public int max(int a, int b) {
+        	if(a > b) {
+        		return a;
+        	}
+        	return b;
+        }
+        ```
+        
+        **코틀린**
+        
+        ```kotlin
+        fun max(a: Int, b: Int): Int {
+        	return if (a > b) {
+        		a
+        	} else {
+        		b
+        	}
+        }
+        ```
+        
+        ```kotlin
+        fun max(a: Int, b: Int): Int =
+        	if (a > b) {
+        		a
+        	} else {
+        		b
+        	}
+        }
+        ```
+        
+        ```kotlin
+        fun max(a: Int, b: Int) = if (a > b) a else b
+        ```
+        
+        - 셋 다 같은 함수
+    - 함수는 클래스 안에 있을 수도, 파일 최상단에 있을 수도 있고 한 파일에 여러 함수들이 있을 수도 있음
+2. default parameter
+    - 주어진 문자열을 N번 출력
+        
+        **자바**
+        
+        ```java
+        pubic void repeat(String str, int num, boolean userNewLine) {
+        	for(int i = 1; i <= num; i++) {
+        		if(useNewLine) {
+        			System.out.println(str);
+        		} else {
+        			System.out,print(str);
+        		}
+        	}
+        }
+        ```
+        
+        - 많은 코드에서 useNewLine이라는 파라미터에 true를 사용 → 귀찮
+            
+            ```java
+            pubic void repeat(String str, int num, boolean userNewLine) {
+            	for(int i = 1; i <= num; i++) {
+            		if(useNewLine) {
+            			System.out.println(str);
+            		} else {
+            			System.out,print(str);
+            		}
+            	}
+            }
+            
+            pubic void repeat(String str, int num) {
+            	repeat(str, num, true);
+            } // 오버로딩 활용
+            
+            pubic void repeat(String str) {
+            	repeat(str, 3, true);
+            } // 오버로딩 활용
+            ```
+            
+            - 자바의 오버로딩 활용(repeat이라는 함수를 여러개 만듦)
+            - 메소드를 3개나 만들다니
+    
+    **코틀린**
+    
+    ```kotlin
+    fun repeat(
+    	str: String,
+    	num: Int = 3,
+    	useNewLine: Boolean = true
+    ) {
+    	for(i in 1..num) {
+    		if(useNewLine) {
+    			println(str)
+    		} else {
+    			print(str)
+    		}
+    	}
+    }
+    ```
+    
+    - default parameter: 기본값을 설정해줌(num: Int = 3, useNewLine: Boolean = true)
+        - 기본값을 사용하지 않을 때는 함수 호출할때 값을 넣어주면 됨
+            - `repeat(”hello world”, 3, false)` → false로 작동
+    - 자바에서는 3개나 써줘야했던 함수를 코틀린에서는 하나만 써줌
+3. named argument(parameter)
+    
+    **코틀린**
+    
+    ```kotlin
+    fun main() {
+    	repeat("Hello World", useNewLine = false)
+    }
+    
+    fun repeat(
+    	str: String,
+    	num: Int = 3,
+    	useNewLine: Boolean = true
+    ) {
+    	for(i in 1..num) {
+    		if(useNewLine) {
+    			println(str)
+    		} else {
+    			print(str)
+    		}
+    	}
+    }
+    ```
+    
+    - `repeat("Hello World", useNewLine = false)`에서 `useNewLine = false`같이 이름을 명시해 주는 것을 **named argument(parameter)**
+    - 매개변수 이름을 통해 직접 지정, 지정되지 않은 매개변수는 기본값 사용
+    - 장점: builder를 가지지 않고도 builer의 장점을 가지게 됨
+        
+        ```kotlin
+        fun main(){
+        	printNameAndGender("FEMALE", "채원")
+        }
+        
+        fun printNameAndGender(name: String, gender: String) {
+        	println(name)
+        	println(gender)
+        }
+        ```
+        
+        - 같은 타입의 파라미터인 경우 바꿔 쓸 가능성이 높음
+        
+        ```kotlin
+        fun main(){
+        	printNameAndGender(gender = "FEMALE", name = "채원")
+        }
+        
+        fun printNameAndGender(name: String, gender: String) {
+        	println(name)
+        	println(gender)
+        }
+        ```
+        
+        - 이런 식으로 명시해줌으로써 오류 방지
+    - 코틀린에서 자바 함수를 가져다 사용할 시 named argument 사용 **불가**
+        - JVM상에서 자바가 바이트코드로 변환될 때 파라미터 이름을 보존하고 있지 않기 때문
+4. 같은 타입의 여러 파라미터 받기(가변인자)
+    - 문자열을 N개 받아 출력
+        
+        **자바**
+        
+        ```java
+        public static void printAll(String... strings) {
+        	for(String str: strings) {
+        		System.out.println(str);
+        	}
+        }
+        ```
+        
+        - `타입…` : 가변인자
+        
+        ```java
+        String[] array = new String[]{"A", "B", "C"};
+        printAll(array);
+        
+        printAll("A", "B", "C");
+        ```
+        
+        - 배열을 직접 넣거나 콤마를 이용해 여러 파라미터를 넣음
+        
+        **코틀린**
+        
+        ```kotlin
+        fum main() {
+        	printAll("A", "B", "C")
+        
+        	val array = arrayOf("A", "B", "C")
+        	printAll(*****array)
+        }
+        
+        fun printAll(**vararg** strings: String) {
+        	for(str in strings) {
+        		println(str)
+        	}
+        }
+        ```
+        
+        - 가변인자를 넣어줄 때 `*`를 붙여야 함
+            - `*`: 스프레드 연산자
+        
+    
+    ## **9강) 코틀린에서 클래스를 다루는 방법**
