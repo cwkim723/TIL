@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -12,7 +13,16 @@
     <h1 id="hello">안녕하세요</h1>
     <h1 id="hi">JS 초보예요</h1>
 
+    <div class="alert-box" id="alert">
+        알림창임
+        <button onclick="document.getElementById('alert').style.display = 'none';">X</button>
+    </div>
+    <button onclick="document.getElementById('alert').style.display = 'block';">버튼</button>
+
     <script>
+        // [기본 형태]
+        // document.getElementById('??').?? = ??;
+
         document.getElementById('hello').innerHTML = '안녕';
         // html 문서의 id가 hello인 html요소를 가져와라.그거의 내부 html을 안녕으로
         // 등호(=) : 오른쪽을 왼쪽에 넣어라
@@ -23,8 +33,11 @@
 
         // [ 오늘의 숙제 ]
         // <h1> 내부 글자 사이즈를 16px로 변경해오십시오
-        document.getElementById('hello').style
+        document.getElementById('hello').style.fontSize = "16px";
 
+        // 오늘의 숙제 :
+        // Alert 박스 내에 닫기 버튼과 기능을 만들어보십시오 
+        // 닫기 버튼을 누르면 Alert 박스가 뿅 사라져야합니다. 
     </script>
 
 </body>
