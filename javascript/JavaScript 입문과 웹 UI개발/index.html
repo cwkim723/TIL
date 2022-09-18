@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 자바스크립트 사용 이유: html 조작 위해 -->
+    <!-- Alert 박스 UI 만들기 -->
+    <h1 id="hello">안녕하세요</h1>
+    <h1 id="hi">JS 초보예요</h1>
+
+    <script>
+        document.getElementById('hello').innerHTML = '안녕';
+        // html 문서의 id가 hello인 html요소를 가져와라.그거의 내부 html을 안녕으로
+        // 등호(=) : 오른쪽을 왼쪽에 넣어라
+        // getElementById('??') : 셀렉터
+
+        // JS 초보예요를 JS 고수예요로 바꾸기
+        document.getElementById('hi').innerHTML = "JS 고수예요"
+
+        // [ 오늘의 숙제 ]
+        // <h1> 내부 글자 사이즈를 16px로 변경해오십시오
+        document.getElementById('hello').style
+
+    </script>
+
+</body>
+
+</html>
