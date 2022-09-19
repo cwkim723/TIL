@@ -14,10 +14,17 @@
     <h1 id="hi">JS 초보예요</h1>
 
     <div class="alert-box" id="alert">
-        알림창임
-        <button onclick="알림창닫기();">X</button>
+        아이디입력하세요
+        <button onclick="알림창('alert', 'none');">X</button>
     </div>
-    <button onclick="알림창열기();">버튼</button>
+    <div class="alert-box" id="alert2">
+        비번입력하세요
+        <button onclick="알림창('alert2', 'none');">X</button>
+    </div>
+    
+    <button onclick="알림창('alert', 'block');">버튼1</button>
+    <button onclick="알림창('alert2', 'block');">버튼2</button>
+
 
     <script>
         // html 코드 하단에 script를 작성해야 잘 동작함
@@ -48,6 +55,23 @@
         function 알림창닫기() {
             document.getElementById('alert').style.display = 'none';
         }
+
+        function plus() {
+            2 + 1
+        }
+        plus()
+
+
+        // 오늘의 숙제 :
+        // 버튼 2개를 만들어놓고
+        // 버튼1과 버튼2를 누르면 각각 다른 이름의 alert 박스가 나오도록 코드를 짜봅시다.
+        // - 버튼1을 누르면 '아이디를 입력하세요' 라는 alert 박스가 등장해야합니다.
+        // - 버튼2를 누르면 '비밀번호를 입력하세요' 라는 alert 박스가 등장해야합니다.
+        function 알림창(아이디, 상태) {
+            document.getElementById(아이디).style.display = 상태;
+        } 
+
+        // 방법2. div 하나만 만들어 두고 어느 버튼 누르냐에 따라 글귀를 바꿔서 출력
     </script>
 
 </body>
