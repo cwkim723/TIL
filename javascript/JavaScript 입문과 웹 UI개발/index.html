@@ -15,11 +15,14 @@
 
     <div class="alert-box" id="alert">
         알림창임
-        <button onclick="document.getElementById('alert').style.display = 'none';">X</button>
+        <button onclick="알림창닫기();">X</button>
     </div>
-    <button onclick="document.getElementById('alert').style.display = 'block';">버튼</button>
+    <button onclick="알림창열기();">버튼</button>
 
     <script>
+        // html 코드 하단에 script를 작성해야 잘 동작함
+        // selector 오타 주의(getElementById('??')
+        
         // [기본 형태]
         // document.getElementById('??').?? = ??;
 
@@ -35,9 +38,16 @@
         // <h1> 내부 글자 사이즈를 16px로 변경해오십시오
         document.getElementById('hello').style.fontSize = "16px";
 
+        function 알림창열기() {
+            document.getElementById('alert').style.display = 'block';
+        }
+
         // 오늘의 숙제 :
         // Alert 박스 내에 닫기 버튼과 기능을 만들어보십시오 
         // 닫기 버튼을 누르면 Alert 박스가 뿅 사라져야합니다. 
+        function 알림창닫기() {
+            document.getElementById('alert').style.display = 'none';
+        }
     </script>
 
 </body>
