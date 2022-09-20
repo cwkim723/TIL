@@ -13,6 +13,7 @@
     <h1 id="hello">안녕하세요</h1>
     <h1 id="hi">JS 초보예요</h1>
 
+    <!-- 방법1 -->
     <div class="alert-box" id="alert">
         아이디입력하세요
         <button onclick="알림창('alert', 'none');">X</button>
@@ -24,6 +25,14 @@
     
     <button onclick="알림창('alert', 'block');">버튼1</button>
     <button onclick="알림창('alert2', 'block');">버튼2</button>
+
+    <!-- 방법2 -->
+    <div class="alert-box" id="alert3">
+        <p id="alert-text">나 알림창인디</p>
+        <button onclick="알림창('alert3', 'none');">X</button>
+    </div>
+    <button onclick="알림창바꾸기('아이디입력하세요');">버튼3</button>
+    <button onclick="알림창바꾸기('비번입력하세요');">버튼4</button>
 
 
     <script>
@@ -72,6 +81,15 @@
         } 
 
         // 방법2. div 하나만 만들어 두고 어느 버튼 누르냐에 따라 글귀를 바꿔서 출력
+        function 알림창바꾸기(메시지) {
+            document.getElementById('alert-text').innerHTML = 메시지;
+            document.getElementById('alert3').style.display = 'block';
+        }
+
+        // 클래스명으로 element 찾기
+        // getElementsByClassName('??')[0]
+        // 클래스는 여러 개가 될 수 있기 때문에 동일 클래스가 여러 개일 경우 인덱싱을 해주는게 정확함
+        // [0]: 찾은 것 중 위에서 0번째
     </script>
 
 </body>

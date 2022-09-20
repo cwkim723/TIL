@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+
+<body>
+    <div class="alert-box" id="alert">
+        <p id="alert-text">나 알림창인디</p>
+        <button id="close">X</button>
+    </div>
+    <button onclick="알림창바꾸기('아이디입력하세요');">버튼3</button>
+    <button onclick="알림창바꾸기('비번입력하세요');">버튼4</button>
+
+
+    <script>
+        // function 알림창(아이디, 상태) {
+        //     document.getElementById(아이디).style.display = 상태;
+        // } 
+
+        document.getElementById('close').addEventListener('click', function() {
+            //     얘를                                     클릭하면
+            // 여기 코드 실행해줌
+            document.getElementById('alert').style.display = 'none';
+        });
+
+        // 이벤트 리스너
+        function 알림창바꾸기(메시지) {
+            document.getElementById('alert-text').innerHTML = 메시지;
+            document.getElementById('alert').style.display = 'block';
+        }
+    </script>
+
+</body>
+
+</html>
