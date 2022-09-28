@@ -18,7 +18,9 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 5;
     padding: 30px;
-    display: none;
+    visibility: hidden; /* 모습만 숨김 */
+    opacity: 0;  /* 안보이게 */
+    transition: all 1s;
 }
 
 .white-bg {
@@ -28,5 +30,6 @@
 }
 
 .show {
-    display: block;
+    visibility: visible;
+    opacity: 1;
 }
