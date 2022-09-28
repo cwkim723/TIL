@@ -20,14 +20,15 @@
 <body>
 
     
-
+    
     <div class="black-bg">
-        <button class="btn btn-primary" id="login">로그인</button>
         <div class="white-bg">
             <h4>로그인하세요</h4>
             <button class="btn btn-danger" id="close">닫기</button>
         </div>
     </div>
+
+    <button class="btn btn-primary" id="login">로그인</button>
 
     <script>
         // document.querySelector('#login').addEventListener('click', function () {
@@ -36,7 +37,7 @@
 
         // 제이쿼리
         $('#login').on('click', function () {
-            $('.white-bg').toggleClass('show')
+            $('.black-bg').toggleClass('show')
         })
        
     </script>
