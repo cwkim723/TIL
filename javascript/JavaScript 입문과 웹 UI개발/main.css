@@ -30,6 +30,15 @@
 }
 
 .show {
+    display: block;
+}
+
+.show-modal {
     visibility: visible;
     opacity: 1;
+}
+
+.main-bg {
+    padding: 100px 20px;
+    background: lightgray
 }

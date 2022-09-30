@@ -19,8 +19,23 @@
 
 <body>
 
-    
-    
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand">Navbar</span>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <ul class="list-group" id="test1">
+        <li class="list-group-item">An item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+    </ul>
+
     <div class="black-bg">
         <div class="white-bg">
             <h4>로그인하세요</h4>
@@ -40,8 +55,13 @@
     <button class="btn btn-primary" id="login">로그인</button>
 
     <script>
+
+        document.querySelector('.navbar-toggler').addEventListener('click', function () {
+            document.querySelector('.list-group').classList.toggle('show-modal');
+        })
+
         document.querySelector('#login').addEventListener('click', function () {
-            document.querySelector('.black-bg').classList.toggle('show')
+            document.querySelector('.black-bg').classList.toggle('show-modal')
         })
 
         // 제이쿼리
@@ -50,9 +70,9 @@
         // })
 
         document.querySelector('#close').addEventListener('click', function () {
-            document.querySelector('.black-bg').classList.remove('show')
+            document.querySelector('.black-bg').classList.remove('show-modal')
         })
-       
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
