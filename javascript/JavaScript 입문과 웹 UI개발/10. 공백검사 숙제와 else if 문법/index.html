@@ -50,6 +50,15 @@
                 alert('6자 미만 입력')
             }
         });
+        document.querySelector('#email').addEventListener('input', function(e) {
+            // input 값이 변할 때 실행됨
+            console.log('input changed')
+        });
+
+        // 엄격한 비교는 === 느슨한 비교는 ==
+        if(1 === '1') {
+            console.log('===')
+        }
     </script>
 
 
