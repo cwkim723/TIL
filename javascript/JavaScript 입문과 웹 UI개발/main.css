@@ -42,3 +42,7 @@
     padding: 100px 20px;
     background: lightgray
 }
+
+.badge.bg-dark {
+    cursor: pointer;
+}
