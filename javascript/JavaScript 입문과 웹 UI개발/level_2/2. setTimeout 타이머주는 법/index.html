@@ -55,16 +55,14 @@
             console.log('input changed')
         });
 
-        // 엄격한 비교는 === 느슨한 비교는 ==
-        if(1 === '1') {
-            console.log('===')
-        }
+        
     </script>
 
 
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <span class="navbar-brand">Navbar</span>
+            <span class="navbar-brand">JSShop</span>
+            <span class="badge bg-dark">Dark 🔄</span>
             <button class="navbar-toggler" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -84,9 +82,32 @@
         <button id="login" class="btn btn-danger">로그인</button>
     </div>
 
+    <div class="alert alert-danger">
+        <span id="second">5</span>초 이내 구매 시 사은품 증정!
+    </div>
+
 
 
     <script>
+
+        // 다크모드 설정
+        // 버튼 누르면 내부 글자 dark -> light
+        // 2회 누르면 다시 dark, 3회 누르면 light
+        let count = 1;
+        document.querySelector('.badge').addEventListener('click', function(){
+            document.querySelector('.navbar').classList.toggle('navbar-dark')
+            document.querySelector('.navbar').classList.toggle('bg-dark')
+            document.querySelector('html').classList.toggle('dark')
+
+            if(count % 2 === 1) {
+                this.innerHTML = 'Light 🔄'
+            } else {
+                this.innerHTML = 'Dark 🔄';
+            }
+            count++;
+        });
+        
+
 
         document.querySelector('.navbar-toggler').addEventListener('click', function () {
             document.querySelector('.list-group').classList.toggle('show-modal');
@@ -96,14 +117,37 @@
             document.querySelector('.black-bg').classList.toggle('show-modal')
         })
 
-        // 제이쿼리
-        // $('#login').on('click', function () {
-        //     $('.black-bg').addClass('show')
-        // })
-
         document.querySelector('#close').addEventListener('click', function () {
             document.querySelector('.black-bg').classList.remove('show-modal')
         })
+
+        // 5초 후에 div 숨김
+        setTimeout(function(){
+            document.querySelector('.alert').style.display = 'none'
+        }, 5000)
+
+        setTimeout(함수, 1000)
+        function 함수() {
+        }
+
+        // 1초마다 코드 실행
+        setInterval(function(){}, 1000)
+
+        // 1초마다 5라는 문자를 1씩 감소
+        // 그냥 함수 파라미터 자리에 들어가는 함수를 콜백함수라고 합니다.
+        // addEventListener(), setTimeout() 이런건 안에 콜백함수를 요구
+        let interval = setInterval(숫자바꾸기, 1000)
+        let countNum = 5;
+        function 숫자바꾸기() {
+            document.querySelector('#second').innerHTML = countNum-1;
+            if(countNum == 0) {
+                clearInterval(interval)
+            }
+
+            countNum -= 1
+        }
+
+        
 
     </script>
 
