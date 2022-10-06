@@ -39,15 +39,25 @@
     <script>
         // 전송 버튼 누르면 input에 입력한 값이 공백이면 알림창
         document.querySelector('form').addEventListener('submit', function(e) {
-            if (document.querySelector('#email').value == '') {
+            const email = document.querySelector('#email').value;
+            const password = document.querySelector('#pwd').value;
+
+            if (email == '') {
                 e.preventDefault();
                 alert('아이디 공백 입력 금지')
-            } else if (document.querySelector('#pwd').value == '') {
+            } else if (/\S+@\S+\.\S+/.test(email) == false) {
+                // 이메일 형식 검사
+                e.preventDefault();
+                alert('이메일 형식 아님용')
+            } else if (password == '') {
                 e.preventDefault();
                 alert('비밀번호 공백 입력 금지')
-            } else if (document.querySelector('#pwd').value.length < 6) {
+            } else if (password.length < 6) {
                 e.preventDefault();
                 alert('6자 미만 입력')
+            } else if (/[A-Z]/.test(password) == false) {
+                e.preventDefault();
+                alert('비밀번호는 대문자 하나 포함해야대')
             }
         });
         document.querySelector('#email').addEventListener('input', function(e) {
@@ -146,6 +156,22 @@
 
             countNum -= 1
         }
+
+        // 'abc'.includes('a') : abc에 a가 들어있냐
+        // /a/.test('abcde') // true : 정규식
+        // /[a-z]/.test('바보') // false
+        // /[A-Z]/.test('abcdeA') // true
+        // /[ㄱ-ㅎ가-힣]/.test('ㅋㅋㅋㅋ') // true
+        // /[0-9]/.test('ㅋㅋㅋㅋ') // false
+        // /\S/.test('ㅋㅋㅋㅋ') // 아무 문자 하나(특문 포함)
+        // /^a/.test('asdffdsd') // a로 시작하냐 -> true
+        // /a$/.test('sadfaa') // a로 끝나냐
+        // /a|b/.test('bbb') // or
+        // email 검사 정규식
+        // /\S+@\S+\.\S+/.test('aaa@bbb.ccc') // 
+        // \S : 아무글자 한글자
+
+        
 
     </script>
 
