@@ -71,3 +71,12 @@
 .slide-box img{
     width: 100%;
 }
+
+
+.btn-div {
+    display: flex;
+}
+
+.btn-area {
+    margin: 0 auto;
+}

@@ -111,12 +111,46 @@ document.querySelector('#email').addEventListener('input', function (e) {
 
     
 // 2번 버튼을 누르면 transform: translateX(-100vw); 추가
+
+let currentSlide = 1
+const firstPage = 1
+const lastPage = 3
 document.querySelector('.slide-1').addEventListener('click', function(){
+    currentSlide = 1;
     document.querySelector('.slide-container').style.transform = 'translateX(0vw)'
 })
 document.querySelector('.slide-2').addEventListener('click', function(){
+    currentSlide = 2;
     document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
 })
 document.querySelector('.slide-3').addEventListener('click', function(){
+    currentSlide = 3;
     document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
+})
+
+
+document.querySelector('.prev-slide').addEventListener('click', function(){
+    let x = 1
+    if(currentSlide == firstPage) {
+        x = Number(lastPage) - 1
+        
+        document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
+        currentSlide = lastPage;
+    } else {  
+        x = Number(currentSlide) - 2;
+
+        document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
+        currentSlide-=1;
+    }
+})
+
+document.querySelector('.next-slide').addEventListener('click', function(){
+    if(currentSlide >= 3) {
+        currentSlide = 0
+    }
+    currentSlide++;
+
+    let x = Number(currentSlide) - 1
+
+    document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
 })
