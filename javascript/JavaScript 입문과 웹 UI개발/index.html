@@ -1,96 +1,80 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="main.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="script.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css"
+        integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
+    <link href="../../main.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <title>Hello, World!</title>
 </head>
 
 <body>
-    <!-- 자바스크립트 사용 이유: html 조작 위해 -->
-    <!-- Alert 박스 UI 만들기 -->
-    <h1 id="hello">안녕하세요</h1>
-    <h1 id="hi">JS 초보예요</h1>
 
-    <!-- 방법1 -->
-    <div class="alert-box" id="alert">
-        아이디입력하세요
-        <button onclick="알림창('alert', 'none');">X</button>
+    <div class="black-bg">
+        <div class="white-bg">
+            <h4>로그인하세요</h4>
+            <form action="success.html">
+                <div class="my-3">
+                    <input type="text" class="form-control" id="email">
+                </div>
+                <div class="my-3">
+                    <input type="password" class="form-control" id="pwd">
+                </div>
+                <button type="submit" class="btn btn-primary" id="send">전송</button>
+                <button type="button" class="btn btn-danger" id="close">닫기</button>
+            </form>
+        </div>
     </div>
-    <div class="alert-box" id="alert2">
-        비번입력하세요
-        <button onclick="알림창('alert2', 'none');">X</button>
-    </div>
+
+
     
-    <button onclick="알림창('alert', 'block');">버튼1</button>
-    <button onclick="알림창('alert2', 'block');">버튼2</button>
 
-    <!-- 방법2 -->
-    <div class="alert-box" id="alert3">
-        <p id="alert-text">나 알림창인디</p>
-        <button onclick="알림창('alert3', 'none');">X</button>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand">JSShop</span>
+            <span class="badge bg-dark">Dark 🔄</span>
+            <button class="navbar-toggler" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <ul class="list-group" id="test1">
+        <li class="list-group-item">An item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+    <div class="main-bg">
+        <h4>Shirts on Sale</h4>
+        <button id="login" class="btn btn-danger">로그인</button>
     </div>
-    <button onclick="알림창바꾸기('아이디입력하세요');">버튼3</button>
-    <button onclick="알림창바꾸기('비번입력하세요');">버튼4</button>
+
+    <div class="alert alert-danger">
+        <span id="second">5</span>초 이내 구매 시 사은품 증정!
+    </div>
 
 
-    <script>
-        // html 코드 하단에 script를 작성해야 잘 동작함
-        // selector 오타 주의(getElementById('??')
-        
-        // [기본 형태]
-        // document.getElementById('??').?? = ??;
 
-        document.getElementById('hello').innerHTML = '안녕';
-        // html 문서의 id가 hello인 html요소를 가져와라.그거의 내부 html을 안녕으로
-        // 등호(=) : 오른쪽을 왼쪽에 넣어라
-        // getElementById('??') : 셀렉터
+    
 
-        // JS 초보예요를 JS 고수예요로 바꾸기
-        document.getElementById('hi').innerHTML = "JS 고수예요"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 
-        // [ 오늘의 숙제 ]
-        // <h1> 내부 글자 사이즈를 16px로 변경해오십시오
-        document.getElementById('hello').style.fontSize = "16px";
-
-        function 알림창열기() {
-            document.getElementById('alert').style.display = 'block';
-        }
-
-        // 오늘의 숙제 :
-        // Alert 박스 내에 닫기 버튼과 기능을 만들어보십시오 
-        // 닫기 버튼을 누르면 Alert 박스가 뿅 사라져야합니다. 
-        function 알림창닫기() {
-            document.getElementById('alert').style.display = 'none';
-        }
-
-        function plus() {
-            2 + 1
-        }
-        plus()
-
-
-        // 오늘의 숙제 :
-        // 버튼 2개를 만들어놓고
-        // 버튼1과 버튼2를 누르면 각각 다른 이름의 alert 박스가 나오도록 코드를 짜봅시다.
-        // - 버튼1을 누르면 '아이디를 입력하세요' 라는 alert 박스가 등장해야합니다.
-        // - 버튼2를 누르면 '비밀번호를 입력하세요' 라는 alert 박스가 등장해야합니다.
-        function 알림창(아이디, 상태) {
-            document.getElementById(아이디).style.display = 상태;
-        } 
-
-        // 방법2. div 하나만 만들어 두고 어느 버튼 누르냐에 따라 글귀를 바꿔서 출력
-        function 알림창바꾸기(메시지) {
-            document.getElementById('alert-text').innerHTML = 메시지;
-            document.getElementById('alert3').style.display = 'block';
-        }
-
-        // 클래스명으로 element 찾기
-        // getElementsByClassName('??')[0]
-        // 클래스는 여러 개가 될 수 있기 때문에 동일 클래스가 여러 개일 경우 인덱싱을 해주는게 정확함
-        // [0]: 찾은 것 중 위에서 0번째
-    </script>
 
 </body>
 

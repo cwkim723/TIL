@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <!-- 자바스크립트 사용 이유: html 조작 위해 -->
+    <!-- Alert 박스 UI 만들기 -->
+    <h1 id="hello">안녕하세요</h1>
+    <h1 id="hi">JS 초보예요</h1>
+
+    <!-- 방법1 -->
+    <div class="alert-box" id="alert">
+        아이디입력하세요
+        <button onclick="알림창('alert', 'none');">X</button>
+    </div>
+    <div class="alert-box" id="alert2">
+        비번입력하세요
+        <button onclick="알림창('alert2', 'none');">X</button>
+    </div>
+    
+    <button onclick="알림창('alert', 'block');">버튼1</button>
+    <button onclick="알림창('alert2', 'block');">버튼2</button>
+
+    <!-- 방법2 -->
+    <div class="alert-box" id="alert3">
+        <p id="alert-text">나 알림창인디</p>
+        <button onclick="알림창('alert3', 'none');">X</button>
+    </div>
+    <button onclick="알림창바꾸기('아이디입력하세요');">버튼3</button>
+    <button onclick="알림창바꾸기('비번입력하세요');">버튼4</button>
+
+
+    <script>
+        // html 코드 하단에 script를 작성해야 잘 동작함
+        // selector 오타 주의(getElementById('??')
+        
+        // [기본 형태]
+        // document.getElementById('??').?? = ??;
+
+        document.getElementById('hello').innerHTML = '안녕';
+        // html 문서의 id가 hello인 html요소를 가져와라.그거의 내부 html을 안녕으로
+        // 등호(=) : 오른쪽을 왼쪽에 넣어라
+        // getElementById('??') : 셀렉터
+
+        // JS 초보예요를 JS 고수예요로 바꾸기
+        document.getElementById('hi').innerHTML = "JS 고수예요"
+
+        // [ 오늘의 숙제 ]
+        // <h1> 내부 글자 사이즈를 16px로 변경해오십시오
+        document.getElementById('hello').style.fontSize = "16px";
+
+        function 알림창열기() {
+            document.getElementById('alert').style.display = 'block';
+        }
+
+        // 오늘의 숙제 :
+        // Alert 박스 내에 닫기 버튼과 기능을 만들어보십시오 
+        // 닫기 버튼을 누르면 Alert 박스가 뿅 사라져야합니다. 
+        function 알림창닫기() {
+            document.getElementById('alert').style.display = 'none';
+        }
+
+        function plus() {
+            2 + 1
+        }
+        plus()
+
+
+        // 오늘의 숙제 :
+        // 버튼 2개를 만들어놓고
+        // 버튼1과 버튼2를 누르면 각각 다른 이름의 alert 박스가 나오도록 코드를 짜봅시다.
+        // - 버튼1을 누르면 '아이디를 입력하세요' 라는 alert 박스가 등장해야합니다.
+        // - 버튼2를 누르면 '비밀번호를 입력하세요' 라는 alert 박스가 등장해야합니다.
+        function 알림창(아이디, 상태) {
+            document.getElementById(아이디).style.display = 상태;
+        } 
+
+        // 방법2. div 하나만 만들어 두고 어느 버튼 누르냐에 따라 글귀를 바꿔서 출력
+        function 알림창바꾸기(메시지) {
+            document.getElementById('alert-text').innerHTML = 메시지;
+            document.getElementById('alert3').style.display = 'block';
+        }
+
+        // 클래스명으로 element 찾기
+        // getElementsByClassName('??')[0]
+        // 클래스는 여러 개가 될 수 있기 때문에 동일 클래스가 여러 개일 경우 인덱싱을 해주는게 정확함
+        // [0]: 찾은 것 중 위에서 0번째
+    </script>
+
+</body>
+
+</html>
