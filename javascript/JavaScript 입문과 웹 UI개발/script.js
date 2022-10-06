@@ -103,3 +103,20 @@ document.querySelector('#email').addEventListener('input', function (e) {
 });
 
 
+// one way 애니메이션 만들기
+// 1. 시작화면 만들기
+// 2. 최종화면 만들기
+// 3. 원할 때 최종화면으로 변하게 JS
+// 4. transition: all 1s; 추가
+
+    
+// 2번 버튼을 누르면 transform: translateX(-100vw); 추가
+document.querySelector('.slide-1').addEventListener('click', function(){
+    document.querySelector('.slide-container').style.transform = 'translateX(0vw)'
+})
+document.querySelector('.slide-2').addEventListener('click', function(){
+    document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
+})
+document.querySelector('.slide-3').addEventListener('click', function(){
+    document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
+})

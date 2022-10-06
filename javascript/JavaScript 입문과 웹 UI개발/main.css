@@ -56,3 +56,18 @@
     background: white;
     color: black;
 }
+
+.slide-container {
+    width: 300vw; /* vw: 브라우저폭 == 100vw */
+    /* transform: translateX(-100vw); */
+    transition: all 1s;
+}
+
+.slide-box {
+    width: 100vw;
+    float: left;
+}
+
+.slide-box img{
+    width: 100%;
+}
