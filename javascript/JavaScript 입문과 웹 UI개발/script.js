@@ -8,6 +8,7 @@ document.querySelector('.badge').addEventListener('click', function () {
     document.querySelector('.navbar').classList.toggle('navbar-dark')
     document.querySelector('.navbar').classList.toggle('bg-dark')
     document.querySelector('html').classList.toggle('dark')
+    document.querySelector('.btn-div').classList.toggle('dark')
 
     if (count % 2 === 1) {
         this.innerHTML = 'Light 🔄'
@@ -20,7 +21,7 @@ document.querySelector('.badge').addEventListener('click', function () {
 
 
 document.querySelector('.navbar-toggler').addEventListener('click', function () {
-    document.querySelector('.list-group').classList.toggle('show-modal');
+    document.querySelector('.list-group').classList.toggle('show');
 })
 
 document.querySelector('#login').addEventListener('click', function () {
@@ -154,3 +155,10 @@ document.querySelector('.next-slide').addEventListener('click', function(){
 
     document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
 })
+
+
+// 소수점 반올림하는 법
+console.log( (1.1 + 0.3).toFixed(1) );
+// '숫자'를 숫자로 변환하고 싶으면 
+parseFloat('123')
+parseInt('123') 

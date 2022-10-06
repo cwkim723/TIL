@@ -31,11 +31,14 @@
 
 .show {
     display: block;
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
 }
 
 .show-modal {
-    visibility: visible;
-    opacity: 1;
+    display: block;
 }
 
 .main-bg {
@@ -80,3 +83,4 @@
 .btn-area {
     margin: 0 auto;
 }
+
