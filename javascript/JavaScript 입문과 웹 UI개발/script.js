@@ -162,3 +162,37 @@ console.log( (1.1 + 0.3).toFixed(1) );
 // '숫자'를 숫자로 변환하고 싶으면 
 parseFloat('123')
 parseInt('123') 
+
+
+// 문제 1. 스크롤바 내리면 로고폰트 작게만들기
+window.addEventListener('scroll', function () {
+    // console.log('hi')
+    // this.window.scrollY // 얼마나 스크롤을 내렸나
+    // this.window.scrollTo(0, 100); // x좌표 y좌표로 강제로 이동(안움직임)
+    // this.window.scrollBy(0, 100); // 스크롤 시 현재 위치부터 강제로 스크롤
+
+    if(this.window.scrollY >= 100) {
+        document.querySelector('.navbar-brand').style.fontSize = '10px';
+    } else {
+        document.querySelector('.navbar-brand').style.fontSize = '30px';
+    }
+
+})
+
+// 문제 2. 회원약관 끝까지 읽으면 alert 띄우기
+// 스크롤바 내린 양 + div 박스 높이 == div의 실제 높이
+/*
+하지만 스크롤 내린 양은 정수단위로 나오지 않고 OS 마다 부정확해서 여유를 두고 비교하는게 좋습니다. 
+그래서 끝까지 스크롤했냐~ 체크하는 것 보다 끝에서 10px 정도 남기고 스크롤했냐~ 라고 체크해봅시다. 
+*/
+let scrollCount = 0;
+document.querySelector('.lorem').addEventListener('scroll', function() {
+    const 스크롤양 = this.scrollTop; // 스크롤바 내린 높이
+    const 박스높이 = this.clientHeight; // div 높이
+    const 실제높이 = this.scrollHeight; // 스크롤바 실제 높이
+
+    if((스크롤양+박스높이 >= 실제높이-10) && (scrollCount === 0)) {
+        scrollCount++;
+        alert('다읽었징')
+    }
+})
