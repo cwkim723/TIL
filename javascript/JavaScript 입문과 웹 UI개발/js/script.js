@@ -209,3 +209,18 @@ window.addEventListener('scroll', function(){
 
     this.document.querySelector('#coloredScroll').style.width = 스크롤바길이 + '%'
 })
+
+
+// 검은 배경 누르면 모달창 닫기
+document.querySelector('.black-bg').addEventListener('click', function(e) {
+    // e.target; // 유저가 실제로 누른 거
+    // console.log(e.target); // 이벤트 리스너 달린 곳
+    // e.currentTarget; // 이벤트리스너 달린 곳 = this
+    // e.preventDefault(); // 이벤트 기본동작 막아줌
+    // e.stopPropagation(); // 상위요소로 이벤트 버블링 막아줌
+
+    if(e.target == document.querySelector('.black-bg')) {
+        document.querySelector('.black-bg').classList.remove('show-modal')
+    }
+
+})
