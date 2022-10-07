@@ -172,7 +172,7 @@ window.addEventListener('scroll', function () {
     // this.window.scrollBy(0, 100); // 스크롤 시 현재 위치부터 강제로 스크롤
 
     if(this.window.scrollY >= 100) {
-        document.querySelector('.navbar-brand').style.fontSize = '10px';
+        document.querySelector('.navbar-brand').style.fontSize = '20px';
     } else {
         document.querySelector('.navbar-brand').style.fontSize = '30px';
     }
@@ -181,6 +181,7 @@ window.addEventListener('scroll', function () {
 
 // 문제 2. 회원약관 끝까지 읽으면 alert 띄우기
 // 스크롤바 내린 양 + div 박스 높이 == div의 실제 높이
+// document.documentElement = document.querySelector('html')
 /*
 하지만 스크롤 내린 양은 정수단위로 나오지 않고 OS 마다 부정확해서 여유를 두고 비교하는게 좋습니다. 
 그래서 끝까지 스크롤했냐~ 체크하는 것 보다 끝에서 10px 정도 남기고 스크롤했냐~ 라고 체크해봅시다. 
@@ -195,4 +196,15 @@ document.querySelector('.lorem').addEventListener('scroll', function() {
         scrollCount++;
         alert('다읽었징')
     }
+})
+
+// 스크롤 퍼센트 체크하기
+window.addEventListener('scroll', function(){
+    const 스크롤양 = document.documentElement.scrollTop; // 스크롤바 내린 높이
+    const 박스높이 = document.documentElement.clientHeight; // div 높이
+    const 브라우저높이 = document.documentElement.scrollHeight;
+
+    const 스크롤바길이 = (Number(스크롤양) + Number(박스높이)) / Number(브라우저높이) * 100
+
+    this.document.querySelector('#coloredScroll').style.width = 스크롤바길이 + '%'
 })
