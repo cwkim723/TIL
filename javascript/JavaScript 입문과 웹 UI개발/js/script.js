@@ -199,6 +199,7 @@ document.querySelector('.lorem').addEventListener('scroll', function() {
 })
 
 // 스크롤 퍼센트 체크하기
+this.document.querySelector('#coloredScroll').style.width = (Number(document.documentElement.clientHeight)) / Number(document.documentElement.scrollHeight) * 100 + '%'
 window.addEventListener('scroll', function(){
     const 스크롤양 = document.documentElement.scrollTop; // 스크롤바 내린 높이
     const 박스높이 = document.documentElement.clientHeight; // div 높이
