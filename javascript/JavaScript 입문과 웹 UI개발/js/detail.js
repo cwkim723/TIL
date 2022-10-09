@@ -70,3 +70,20 @@ function 탭열기(숫자) {
     document.querySelectorAll('.tab-button')[숫자].classList.add('orange');
     document.querySelectorAll('.tab-content')[숫자].classList.add('show')
 }
+
+let car = ['소나타', 50000, 'white']; // 배열
+let car2 = {name: '소나타', price: 50000}; // object 자료형: 꼭 이름을 붙여야 함(key: value)
+car[0] = '아반떼'
+console.log(car[0]);
+console.log(car2.name);
+
+// array, object 차이점
+// array는 자료간 정렬 가능
+car.sort();
+console.log(car);
+// 중간에 자르기도 가능
+car.slice(1, 3);
+
+// 여기서 car2 에 저장된 소나타라는 상품명과 50000이라는 가격을 뽑아서 html에 집어넣어보십시오 
+document.querySelector('.card.p-3').querySelectorAll('span')[0].innerHTML = car2.name
+document.querySelector('.card.p-3').querySelectorAll('span')[1].innerHTML = car2.price
