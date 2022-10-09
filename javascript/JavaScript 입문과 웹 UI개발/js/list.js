@@ -5,6 +5,6 @@ const products = [
     { id: 2, price: 60000, title: 'Black Monastery' }
 ];
 for(let i = 0; i < products.length; i++) {
-    document.querySelectorAll('.card-body')[i].querySelector('h5').innerHTML = products[i].title
-    document.querySelectorAll('.card-body')[i].querySelector('p').innerHTML = products[i].price
+    document.querySelectorAll('.card-body h5')[i].innerHTML = products[i].title
+    document.querySelectorAll('.card-body p')[i].innerHTML = `가격은 ${products[i].price}`
 }
