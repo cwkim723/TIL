@@ -104,3 +104,19 @@ document.querySelector('.card.p-3').querySelectorAll('span')[1].innerHTML = car2
 jQuery, React, Vue 이런거 사용하면 코드가 짧아집니다.
 
 */
+
+// - <select> 태그도 선택시 input, change 이벤트가 발생합니다.
+// - <select> 태그도 .value로 유저가 입력한 값을 가져올 수 있습니다.
+document.querySelector('#choice-item').addEventListener('change', function(e) {
+    // change말고 input해도 가넝
+    // e.currentTarget
+    // e.currentTarget.value = this
+    const value = this.options[this.selectedIndex].value;
+    
+    const size = document.querySelector('#choice-size')
+    size.classList.remove('form-hide');
+
+    if(value !== '셔츠') {
+        size.classList.add('form-hide');
+    }
+})
