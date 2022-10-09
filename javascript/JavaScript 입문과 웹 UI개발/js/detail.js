@@ -43,13 +43,24 @@ const tabContent = document.querySelectorAll('.tab-content');
 //     })
 // }
 
+
 // 이벤트 리스너가 줄어들수록 램 용량이 줄어듦
 document.querySelector('.list').addEventListener('click', function(e) {
     // 지금 누른게 버튼 0이면 버튼0에 orange, 박스0에 show
-    if(e.target ==  document.querySelectorAll('.tab-button')[0]) {
-
-    }
+    // if(e.target ==  document.querySelectorAll('.tab-button')[0]) {
+    //     탭열기(0)
+    // }
+    // if(e.target ==  document.querySelectorAll('.tab-button')[1]) {
+    //     탭열기(1)
+    // }
+    // if(e.target ==  document.querySelectorAll('.tab-button')[2]) {
+    //     탭열기(2)
+    // }
+    // console.log(e.target.dataset.button)
+    탭열기(Number(e.target.dataset.button))
 })
+// html태그에 몰래 정보숨기기 가능
+// data-자료이름="값"
 
 function 탭열기(숫자) {
     for (let i = 0; i < tabButton.length; i++) {

@@ -63,17 +63,17 @@
 
     <div class="container mt-5">
         <ul class="list">
-            <li class="tab-button">Products</li>
-            <li class="tab-button orange">Information</li>
-            <li class="tab-button">Shipping</li>
+            <li class="tab-button" data-button="0">Products</li>
+            <li class="tab-button orange" data-button="1">Information</li>
+            <li class="tab-button" data-button="2">Shipping</li>
         </ul>
-        <div class="tab-content">
+        <div class="tab-content" data-content="0">
             <p>상품설명입니다. Product</p>
         </div>
-        <div class="tab-content show">
+        <div class="tab-content show" data-content="1">
             <p>스펙설명입니다. Information</p>
         </div>
-        <div class="tab-content">
+        <div class="tab-content" data-content="2">
             <p>배송정보입니다. Shipping</p>
         </div>
     </div>
