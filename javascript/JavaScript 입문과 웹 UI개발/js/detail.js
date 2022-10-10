@@ -74,14 +74,14 @@ function 탭열기(숫자) {
 let car = ['소나타', 50000, 'white']; // 배열
 let car2 = {name: '소나타', price: [50000, 3000, 4000]}; // object 자료형: 꼭 이름을 붙여야 함(key: value)
 car[0] = '아반떼'
-console.log(car[0]);
-console.log(car2.name);
-console.log(car2['name']);
+// console.log(car[0]);
+// console.log(car2.name);
+// console.log(car2['name']);
 
 // array, object 차이점
 // array는 자료간 정렬 가능
 car.sort();
-console.log(car);
+// console.log(car);
 // 중간에 자르기도 가능
 car.slice(1, 3);
 
@@ -111,12 +111,27 @@ document.querySelector('#choice-item').addEventListener('change', function(e) {
     // change말고 input해도 가넝
     // e.currentTarget
     // e.currentTarget.value = this
-    const value = this.options[this.selectedIndex].value;
-    
     const size = document.querySelector('#choice-size')
     size.classList.remove('form-hide');
 
-    if(value !== '셔츠') {
-        size.classList.add('form-hide');
+    const value = this.options[this.selectedIndex].value;
+
+    if(value === '바지') {
+        size.options[0].innerHTML = 28;
+        size.options[1].innerHTML = 30;
+    } else if (value === '모자') {
+        size.classList.add('form-hide')
     }
 })
+
+// 자바스크립트로 html 생성법
+// 방법1 : createElement()
+// const a = document.createElement('p');
+// a.innerHTML = '안녕';
+// document.querySelector('#test').appendChild(a);
+
+// 방법2 : insertAdjacentHTML(), append()
+// const 템플릿 = '<p>안녕</p>';
+// document.querySelector('#test').insertAdjacentHTML('beforeend', 템플릿);
+// document.querySelector('#test').innerHTML = 템플릿;
+// 'beforeend' 이건 안쪽 맨 밑에 추가하라
