@@ -3,7 +3,7 @@ const tabContent = document.querySelectorAll('.tab-content');
 
 // tabButton[0].addEventListener('click', function() {
 //     // 전체에 있는 orange 다 삭제 -> tabButton해당 버튼에 orange + 해당 위치 content도
-    
+
 //     태그삭제하기()
 
 //     tabButton[0].classList.add('orange')
@@ -11,7 +11,7 @@ const tabContent = document.querySelectorAll('.tab-content');
 // })
 // tabButton[1].addEventListener('click', function() {
 //     // 전체에 있는 orange 다 삭제 -> 해당 버튼에 orange + 해당 위치 content도
-    
+
 //     태그삭제하기()
 
 //     tabButton[1].classList.add('orange')
@@ -19,7 +19,7 @@ const tabContent = document.querySelectorAll('.tab-content');
 // })
 // tabButton[2].addEventListener('click', function() {
 //     // 전체에 있는 orange 다 삭제 -> 해당 버튼에 orange + 해당 위치 content도
-    
+
 //     태그삭제하기()
 
 //     tabButton[2].classList.add('orange')
@@ -45,7 +45,7 @@ const tabContent = document.querySelectorAll('.tab-content');
 
 
 // 이벤트 리스너가 줄어들수록 램 용량이 줄어듦
-document.querySelector('.list').addEventListener('click', function(e) {
+document.querySelector('.list').addEventListener('click', function (e) {
     // 지금 누른게 버튼 0이면 버튼0에 orange, 박스0에 show
     // if(e.target ==  document.querySelectorAll('.tab-button')[0]) {
     //     탭열기(0)
@@ -72,7 +72,7 @@ function 탭열기(숫자) {
 }
 
 let car = ['소나타', 50000, 'white']; // 배열
-let car2 = {name: '소나타', price: [50000, 3000, 4000]}; // object 자료형: 꼭 이름을 붙여야 함(key: value)
+let car2 = { name: '소나타', price: [50000, 3000, 4000] }; // object 자료형: 꼭 이름을 붙여야 함(key: value)
 car[0] = '아반떼'
 // console.log(car[0]);
 // console.log(car2.name);
@@ -107,22 +107,53 @@ jQuery, React, Vue 이런거 사용하면 코드가 짧아집니다.
 
 // - <select> 태그도 선택시 input, change 이벤트가 발생합니다.
 // - <select> 태그도 .value로 유저가 입력한 값을 가져올 수 있습니다.
-document.querySelector('#choice-item').addEventListener('change', function(e) {
+const pants = [28, 30, 32, 34];
+const shirts = [95, 100, 105];
+document.querySelector('#choice-item').addEventListener('change', function (e) {
     // change말고 input해도 가넝
     // e.currentTarget
     // e.currentTarget.value = this
     const size = document.querySelector('#choice-size')
-    size.classList.remove('form-hide');
 
     const value = this.options[this.selectedIndex].value;
 
-    if(value === '바지') {
-        size.options[0].innerHTML = 28;
-        size.options[1].innerHTML = 30;
+
+
+    if (value === '바지') {
+        size.classList.remove('form-hide');
+
+        document.querySelectorAll('.form-select')[1].innerHTML = ""
+        pants.forEach((size, i) => {
+            // size = 28, 30, 32, 34
+            document.querySelectorAll('.form-select')[1].insertAdjacentHTML('beforeEnd', `<option>${size}</option>`)
+            console.log(i)
+            // console.log(this) // document.querySelectorAll('.form-select')[0]
+        })
+        // arrow function(=>) 쓰면 this 뜻 달라질 수 있음. function()쓰면 정확함
+
+        // pants.forEach(function(size) {
+        //     const option = document.createElement('option');
+        //     option.value = size;
+        //     option.text = size;
+        //     // size = 28, 30, 32, 34
+        //     document.querySelectorAll('.form-select')[1].appendChild(option)
+        // })
     } else if (value === '모자') {
         size.classList.add('form-hide')
+    } else if (value === '셔츠') {
+        size.classList.remove('form-hide');
+        document.querySelectorAll('.form-select')[1].innerHTML = ""
+
+        shirts.forEach(function (size) {
+            // size = 28, 30, 32, 34
+            document.querySelectorAll('.form-select')[1].insertAdjacentHTML('beforeEnd', `<option>${size}</option>`)
+        })
     }
 })
+/**
+ * createElement -> appendChild
+ * 문자열로 태그 생성 -> insertAdjacentHTML
+ */
 
 // 자바스크립트로 html 생성법
 // 방법1 : createElement()
@@ -135,3 +166,4 @@ document.querySelector('#choice-item').addEventListener('change', function(e) {
 // document.querySelector('#test').insertAdjacentHTML('beforeend', 템플릿);
 // document.querySelector('#test').innerHTML = 템플릿;
 // 'beforeend' 이건 안쪽 맨 밑에 추가하라
+
