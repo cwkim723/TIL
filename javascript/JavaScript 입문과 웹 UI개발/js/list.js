@@ -33,12 +33,49 @@ const products = [
 //         console.log('실패함');
 //     })
 
-const oldOne = document.querySelector('.col-sm-4');
-for(let i = 1; i < products.length; i++) {
-    oldOne.after(document.querySelector('.col-sm-4').cloneNode(true));
-}
+// 상품목록 html 만들기
+// const oldOne = document.querySelector('.col-sm-4');
+// for (let i = 1; i < products.length; i++) {
+//     oldOne.after(oldOne.cloneNode(true));
+// }
 
 products.forEach((product, i) => {
-    document.querySelectorAll('.col-sm-4 h5')[i].innerHTML = product.title
-    document.querySelectorAll('.col-sm-4 p')[i].innerHTML = `가격은 ${product.price}`
+    // document.querySelectorAll('.col-sm-4 h5')[i].innerHTML = product.title
+    // document.querySelectorAll('.col-sm-4 p')[i].innerHTML = `가격은 ${product.price}`
+
+    var 템플릿 =
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${product.title}</h5>
+          <p>가격 : ${product.price}</p>
+        </div>`;
+    $('.row').append(템플릿)
 })
+
+// 더보기 누르면 상품 3개 가져와서 출력하기
+let buttonCount = 0;
+document.querySelector('#more').addEventListener('click', function () {
+    buttonCount += 1;
+    fetch(`https://codingapple1.github.io/js/more${buttonCount}.json`)
+        .then(res => res.json())
+        .then(data => {
+            // for (let i = 0; i < data.length; i++) {
+            //     oldOne.after(oldOne.cloneNode(true));
+            // }
+
+            data.forEach((product) => {
+                // document.querySelectorAll('.col-sm-4 h5')[i].innerHTML = product.title
+                // document.querySelectorAll('.col-sm-4 p')[i].innerHTML = `가격은 ${product.price}`
+                var 템플릿 =
+                    `<div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${product.title}</h5>
+                    <p>가격 : ${product.price}</p>
+                    </div>`;
+                $('.row').append(템플릿)
+            })
+        })
+        .catch(error => {
+            console.log('실패함요')
+        })
+});
