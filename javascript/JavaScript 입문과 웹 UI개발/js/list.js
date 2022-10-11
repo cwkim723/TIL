@@ -49,7 +49,7 @@ products.forEach((product, i) => {
           <h5>${product.title}</h5>
           <p>가격 : ${product.price}</p>
         </div>`;
-    $('.row').append(템플릿)
+    document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
 })
 
 // 더보기 누르면 상품 3개 가져와서 출력하기
@@ -72,10 +72,112 @@ document.querySelector('#more').addEventListener('click', function () {
                     <h5>${product.title}</h5>
                     <p>가격 : ${product.price}</p>
                     </div>`;
-                $('.row').append(템플릿)
+                document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
             })
         })
         .catch(error => {
             console.log('실패함요')
         })
 });
+
+
+// 정렬
+const 어레이 = [7, 3, 5, 2, 40];
+어레이.sort(function (a, b) {
+    // return b - a; // 내림차순
+    return a - b; // 오름차순
+    /**
+     * return값이 양수면 a를 오른쪽으로
+     * return값이 음수면 b를 오른쪽으로
+     * [7, 3, 5, 2, 40]
+     * a=7, b=3 [3, 7, 5, 2, 40]
+     * a=3, b=5 [3, 7, 5, 2, 40]
+     * a=3, b=2 [2, 3, 5, 7, 40]
+     * a=3, b=40 [2, 3, 5, 7, 40]
+     * a=2, b=5 [2, 3, 5, 7, 40]
+     * a=2, b=3 [2, 3, 5, 7, 40]
+     * a=2, b=40 [2, 3, 5, 7, 40]
+     * a=5, b=7 [2, 3, 5, 7, 40]
+     * a=5, b=40 [2, 3, 5, 7, 40]
+     * a=7, b=40 [2, 3, 5, 7, 40]
+     */
+});
+console.log(어레이)
+
+// 문자 내림차순 정렬
+const 어레이2 = ['a', 'c', 'b']
+어레이2.sort().reverse();
+console.log(어레이2)
+
+// products 가격순 정렬
+document.querySelector('#price').addEventListener('click', function () {
+    products.sort(function (a, b) {
+        return a.price - b.price;
+    })
+    // console.log(products)
+
+    document.querySelector('.row').innerHTML = ""
+    products.forEach((product, i) => {
+        var 템플릿 =
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${product.title}</h5>
+              <p>가격 : ${product.price}</p>
+            </div>`;
+        document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
+    })
+})
+
+// 숙제1. "상품명 다나가순 정렬" 버튼과 기능을 만들어오십시오.
+document.querySelector('#name').addEventListener('click', function () {
+    products.sort(function (a, b) {
+        if(a.title < b.title) return 1;
+        if(a.title > b.title) return -1;
+        if(a.title === b.title) return 0;
+    })
+    // console.log(products)
+
+    document.querySelector('.row').innerHTML = ""
+    products.forEach((product, i) => {
+        var 템플릿 =
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${product.title}</h5>
+              <p>가격 : ${product.price}</p>
+            </div>`;
+        document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
+    })
+})
+
+// array 자료 원하는 것만 필터: .filter()
+어레이.filter(function(a){
+    return a < 4;
+});
+console.log(어레이);
+
+// .sort()는 원본 변형O, .filter()는 원본 변형 X
+
+// 숙제2. "6만원 이하 상품보기" 버튼과 기능을 만들어오십시오. 
+document.querySelector('#filter').addEventListener('click', function() {
+    const 새어레이 = products.filter(function(product) {
+        return product.price <= 60000
+    })
+
+    document.querySelector('.row').innerHTML = ""
+    새어레이.forEach((product, i) => {
+        var 템플릿 =
+            `<div class="col-sm-4">
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>${product.title}</h5>
+              <p>가격 : ${product.price}</p>
+            </div>`;
+        document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
+    })
+})
+
+// array자료 전부 변형하려면 .map()
+// const 어레이 = [2, 3, 5, 7, 40]
+const 뉴어레이 = 어레이.map(function(a) {
+    return a * 4;
+})
+console.log(뉴어레이) // [8, 12, 20, 28, 160]
