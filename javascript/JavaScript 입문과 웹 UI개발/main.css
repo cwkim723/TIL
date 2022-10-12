@@ -141,3 +141,21 @@
     float: left;
     width: 300px;
 }
+
+.card-background {
+    height: 3000px;
+    margin-top: 800px;
+    margin-bottom: 1600px;
+}
+
+.card-box img {
+    display: block;
+    margin: auto;
+    max-width: 80%;
+}
+
+.card-box {
+    position: sticky;
+    top: 400px; /*좌표속성필요*/
+    margin-top: 200px;
+}
