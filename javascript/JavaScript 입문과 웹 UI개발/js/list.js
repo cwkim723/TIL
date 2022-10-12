@@ -39,6 +39,7 @@ const products = [
 //     oldOne.after(oldOne.cloneNode(true));
 // }
 
+// 상품 리스트 생성
 products.forEach((product, i) => {
     // document.querySelectorAll('.col-sm-4 h5')[i].innerHTML = product.title
     // document.querySelectorAll('.col-sm-4 p')[i].innerHTML = `가격은 ${product.price}`
@@ -48,6 +49,7 @@ products.forEach((product, i) => {
           <img src="https://via.placeholder.com/600" class="w-100">
           <h5>${product.title}</h5>
           <p>가격 : ${product.price}</p>
+          <button class="buy btn btn-primary">구매</button>
         </div>`;
     document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
 })
@@ -102,12 +104,12 @@ const 어레이 = [7, 3, 5, 2, 40];
      * a=7, b=40 [2, 3, 5, 7, 40]
      */
 });
-console.log(어레이)
+// console.log(어레이)
 
 // 문자 내림차순 정렬
 const 어레이2 = ['a', 'c', 'b']
 어레이2.sort().reverse();
-console.log(어레이2)
+// console.log(어레이2)
 
 // products 가격순 정렬
 document.querySelector('#price').addEventListener('click', function () {
@@ -131,26 +133,26 @@ document.querySelector('#price').addEventListener('click', function () {
 
 
 // array 자료 원하는 것만 필터: .filter()
-어레이.filter(function(a){
+어레이.filter(function (a) {
     return a < 4;
 });
-console.log(어레이);
+// console.log(어레이);
 
 // .sort()는 원본 변형O, .filter()는 원본 변형 X
 
 // array자료 전부 변형하려면 .map()
 // const 어레이 = [2, 3, 5, 7, 40]
-const 뉴어레이 = 어레이.map(function(a) {
+const 뉴어레이 = 어레이.map(function (a) {
     return a * 4;
 })
-console.log(뉴어레이) // [8, 12, 20, 28, 160]
+// console.log(뉴어레이) // [8, 12, 20, 28, 160]
 
 // 숙제1. "상품명 다나가순 정렬" 버튼과 기능을 만들어오십시오.
 document.querySelector('#name').addEventListener('click', function () {
     products.sort(function (a, b) {
-        if(a.title < b.title) return 1;
-        if(a.title > b.title) return -1;
-        if(a.title === b.title) return 0;
+        if (a.title < b.title) return 1;
+        if (a.title > b.title) return -1;
+        if (a.title === b.title) return 0;
     })
     // console.log(products)
 
@@ -167,7 +169,7 @@ document.querySelector('#name').addEventListener('click', function () {
 })
 
 // 숙제2. "6만원 이하 상품보기" 버튼과 기능을 만들어오십시오. 
-document.querySelector('#filter').addEventListener('click', function() {
+document.querySelector('#filter').addEventListener('click', function () {
     const 새어레이 = products.filter((product) => product.price <= 60000)
 
     document.querySelector('.row').innerHTML = ""
@@ -180,4 +182,38 @@ document.querySelector('#filter').addEventListener('click', function() {
             </div>`;
         document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
     })
+})
+
+// 로컬스토리지
+// array/object -> JSON : JSON.stringify()
+// JSON -> array/object : JSON.parse()
+localStorage.setItem('이름', 'kim');
+localStorage.getItem('이름');
+localStorage.removeItem('이름');
+localStorage.setItem('num', [1, 2, 3]); // array를 강제로 문자로 변환해서 저장시킴(깨짐)
+const arr = [1, 2, 3];
+const jsonArr = JSON.stringify(arr);
+localStorage.setItem('num', jsonArr); // array를 json으로 바꾸면 안전하게 저장
+const 꺼낸거 = localStorage.getItem('num');
+const 제이슨 = JSON.parse(꺼낸거);
+// console.log(꺼낸거); // [1,2,3]
+// console.log(제이슨[0]) // 1
+
+
+// 숙제1. 구매버튼 누르면 누른 상품명 localStorage에 저장
+document.querySelector('.row').addEventListener('click', function (e) {
+    const cart = localStorage.getItem('cart')
+    const newItem = e.target.parentNode.querySelector('h5').innerHTML
+
+    if (cart == null) {
+        let 뉴카트 = new Array();
+        뉴카트.push(newItem);
+        localStorage.setItem('cart', JSON.stringify(뉴카트))
+    } else {
+        const 카트arr = JSON.parse(cart);
+        if(!카트arr.includes(newItem)) {
+            카트arr.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(카트arr))
+        }
+    }
 })
