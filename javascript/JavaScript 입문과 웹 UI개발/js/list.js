@@ -128,6 +128,23 @@ document.querySelector('#price').addEventListener('click', function () {
     })
 })
 
+
+
+// array 자료 원하는 것만 필터: .filter()
+어레이.filter(function(a){
+    return a < 4;
+});
+console.log(어레이);
+
+// .sort()는 원본 변형O, .filter()는 원본 변형 X
+
+// array자료 전부 변형하려면 .map()
+// const 어레이 = [2, 3, 5, 7, 40]
+const 뉴어레이 = 어레이.map(function(a) {
+    return a * 4;
+})
+console.log(뉴어레이) // [8, 12, 20, 28, 160]
+
 // 숙제1. "상품명 다나가순 정렬" 버튼과 기능을 만들어오십시오.
 document.querySelector('#name').addEventListener('click', function () {
     products.sort(function (a, b) {
@@ -149,19 +166,9 @@ document.querySelector('#name').addEventListener('click', function () {
     })
 })
 
-// array 자료 원하는 것만 필터: .filter()
-어레이.filter(function(a){
-    return a < 4;
-});
-console.log(어레이);
-
-// .sort()는 원본 변형O, .filter()는 원본 변형 X
-
 // 숙제2. "6만원 이하 상품보기" 버튼과 기능을 만들어오십시오. 
 document.querySelector('#filter').addEventListener('click', function() {
-    const 새어레이 = products.filter(function(product) {
-        return product.price <= 60000
-    })
+    const 새어레이 = products.filter((product) => product.price <= 60000)
 
     document.querySelector('.row').innerHTML = ""
     새어레이.forEach((product, i) => {
@@ -174,10 +181,3 @@ document.querySelector('#filter').addEventListener('click', function() {
         document.querySelector('.row').insertAdjacentHTML('beforeend', 템플릿)
     })
 })
-
-// array자료 전부 변형하려면 .map()
-// const 어레이 = [2, 3, 5, 7, 40]
-const 뉴어레이 = 어레이.map(function(a) {
-    return a * 4;
-})
-console.log(뉴어레이) // [8, 12, 20, 28, 160]
