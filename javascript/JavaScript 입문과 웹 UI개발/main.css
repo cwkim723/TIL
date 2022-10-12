@@ -123,3 +123,21 @@
 .container{
     padding: 10px;
 }
+
+.grey {
+    background: lightgrey;
+    height: 2000px;
+    margin-top: 500px;
+}
+
+.image {
+    float: right;
+    width: 400px;
+    position: sticky; /* 조건부 fixed */
+    top: 100px; /* 스크롤 되다가 위에서부터 100px 지점에서 고정 */
+}
+
+.text {
+    float: left;
+    width: 300px;
+}

@@ -202,16 +202,43 @@ const 제이슨 = JSON.parse(꺼낸거);
 
 // 숙제1. 구매버튼 누르면 누른 상품명 localStorage에 저장
 document.querySelector('.row').addEventListener('click', function (e) {
-    const cart = localStorage.getItem('cart')
-    const newItem = e.target.parentNode.querySelector('h5').innerHTML
+    const cart = localStorage.cart // localStorage.getItem('cart')와 동일
+    // const newItem = e.target.parentNode.querySelector('h5').innerHTML
+    const newItem = e.target.previousElementSibling.previousElementSibling.innerHTML
+    // console.log(newItem)
 
     if (cart == null) {
-        let 뉴카트 = new Array();
-        뉴카트.push(newItem);
-        localStorage.setItem('cart', JSON.stringify(뉴카트))
+        localStorage.setItem('cart', JSON.stringify([newItem]))
     } else {
         const 카트arr = JSON.parse(cart);
         if(!카트arr.includes(newItem)) {
+            카트arr.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(카트arr))
+        }
+    }
+})
+
+// 응용: 아니면 같은 상품 구매 누르면 상품 갯수가 올라가게?
+document.querySelector('.row').addEventListener('click', function (e) {
+    const cart = localStorage.cart
+    const newItem = e.target.previousElementSibling.previousElementSibling.innerHTML
+
+    if (cart == null) {
+        localStorage.setItem('cart', JSON.stringify({'title': newItem, 'count': 1}))
+    } else {
+        const 카트arr = JSON.parse(cart);
+
+        카트arr.map(function(item) {
+            if(item.title.includes(newItem)) {
+                item.count.push(Number(item.count)+=1);
+            }
+        })
+        localStorage.setItem('cart', JSON.stringify(카트arr));
+        
+        if(!카트arr.title.includes(newItem)) {
+            카트arr.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(카트arr))
+        } else {
             카트arr.push(newItem);
             localStorage.setItem('cart', JSON.stringify(카트arr))
         }
