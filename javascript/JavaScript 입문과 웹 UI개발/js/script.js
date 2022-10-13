@@ -224,3 +224,110 @@ document.querySelector('.black-bg').addEventListener('click', function(e) {
     }
 
 })
+
+// 캐러셀 스와이프 기능
+let 시작좌표 = 0;
+let 눌렀냐 = false;
+let 이동거리 = 0;
+let width = 0;
+document.querySelector('.slide-container').addEventListener('mousedown', function(e){
+    // 기능1: 내가 드래그한 거리만큼 박스도 왼쪽으로 이동(이동후x좌표-이동전x좌표)
+    // mousedown -> 모바일에선 touchstart
+    시작좌표 = e.clientX;
+    눌렀냐 = true;
+});
+document.querySelector('.slide-container').addEventListener('mousemove', function(e){
+    // mousemove -> 모바일에선 touchmove
+    if(눌렀냐 === true) {
+        if(currentSlide == 2) {
+            width = document.querySelectorAll('.slide-box')[Number(currentSlide-1)-1].childNodes[1].width
+        } else if (currentSlide == 3) {
+            width += document.querySelectorAll('.slide-box')[Number(currentSlide-1)-1].childNodes[1].width
+            width += document.querySelectorAll('.slide-box')[Number(currentSlide-1)-1].childNodes[1].width
+        }
+        document.querySelector('.slide-container').style.transform = `translateX(${(e.clientX - 시작좌표 - width)}px)`;
+
+        이동거리 = e.clientX - 시작좌표;
+        clientx = e.clientX
+    }
+    width = 0;
+});
+document.querySelector('.slide-container').addEventListener('mouseup', function(e){
+    // 기능1: 내가 드래그한 거리만큼 박스도 왼쪽으로 이동(이동후x좌표-이동전x좌표)
+    // mouseup -> 모바일에선 touchend
+
+    눌렀냐 = false;
+    if(이동거리 <= -100-width) {
+        if(currentSlide >= 3) {
+            currentSlide = 0
+        }
+        currentSlide++;
+    
+        let x = Number(currentSlide) - 1
+    
+        document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
+        document.querySelector('.slide-container').style.transition = 'all 0.5s'
+    } else if (이동거리 >= -100 && 이동거리 <= 100) {
+        document.querySelector('.slide-container').style.transform = 'translateX(0vw)';
+        document.querySelector('.slide-container').style.transition = 'all 0.5s'
+    } else if (이동거리 > 100) {
+        let x = 1
+        if(currentSlide == firstPage) {
+            x = Number(lastPage) - 1
+            
+            document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
+            document.querySelector('.slide-container').style.transition = 'all 0.5s'
+            currentSlide = lastPage;
+        } else {  
+            x = Number(currentSlide) - 2;
+
+            document.querySelector('.slide-container').style.transform = 'translateX(-' + x + '00vw)';
+            document.querySelector('.slide-container').style.transition = 'all 0.5s'
+            currentSlide-=1;
+        }
+
+    } 
+
+    setTimeout(()=>{
+        document.querySelector('.slide-container').style.transition = 'none'
+    },500)
+    이동거리 = 0
+});
+
+
+
+
+
+
+// 모바일 ver
+document.querySelectorAll('.slide-box')[0].addEventListener('touchstart', function(e){
+    // 기능1: 내가 드래그한 거리만큼 박스도 왼쪽으로 이동(이동후x좌표-이동전x좌표)
+    // mousedown -> 모바일에선 touchstart
+    시작좌표 = e.touches[0].clientX;
+    눌렀냐 = true;
+});
+document.querySelectorAll('.slide-box')[0].addEventListener('touchmove', function(e){
+    // mousemove -> 모바일에선 touchmove
+
+    if(눌렀냐 === true) {
+        document.querySelector('.slide-container').style.transform = `translateX(${e.touches[0].clientX - 시작좌표}px)`;
+        이동거리 = e.touches[0].clientX - 시작좌표;
+    }
+});
+document.querySelectorAll('.slide-box')[0].addEventListener('touchend', function(e){
+    // 기능1: 내가 드래그한 거리만큼 박스도 왼쪽으로 이동(이동후x좌표-이동전x좌표)
+    // mouseup -> 모바일에선 touchend
+
+    눌렀냐 = false;
+    if(이동거리 <= -100) {
+        document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
+        document.querySelector('.slide-container').style.transition = 'all 0.5s'
+    } else {
+        document.querySelector('.slide-container').style.transform = 'translateX(0vw)'
+        document.querySelector('.slide-container').style.transition = 'all 0.5s'
+    }
+    setTimeout(()=>{
+        document.querySelector('.slide-container').style.transition = 'none'
+    },500)
+    이동거리 = 0
+});
