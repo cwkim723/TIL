@@ -189,3 +189,21 @@ ebe4d0957a37   fun-docker   "node index.js"   38 seconds ago   Up 37 seconds   0
 REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
 fun-docker   latest    fd017f7e75c9   7 minutes ago   119MB
 ```
+
+<br>
+
+<h3>docker hub login</h3>
+
+```
+docker login -u ID
+```
+- ID에는 도커허브 가입한 아이디 입력
+
+<br>
+
+<h3>도커 허브에 해당 이미지 푸시</h3>
+
+```
+docker push ID/docker-exa
+mple:latest
+```
