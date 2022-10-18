@@ -16,6 +16,9 @@ app
 })
 .get('/', function(요청, 응답){
     응답.sendFile(__dirname + '/index.html');
+})
+.get('/write', function(요청, 응답){
+    응답.sendFile(__dirname + '/write.html');
 });
 
 // 서버 실행 자동화
