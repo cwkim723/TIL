@@ -37,4 +37,7 @@ logs
 results
 build
 
+.vscode/
+.env
+
 node_modules
