@@ -44,11 +44,11 @@
             </div>
         </div>
 
-        <div style="margin-left:20px; margin-right:20px;">
+        <div>
 
-            <h3>기록해도 안할 거 알지만</h3>
+            <!-- <h3>기록해도 안할 거 알지만</h3> -->
 
-            <div class="form-floating mb-3">
+            <!-- <div class="form-floating mb-3">
                 <label>오늘의 할일</label>
                 <input type="type" class="form-control" placeholder="오늘의 할일">
             </div>
@@ -56,6 +56,22 @@
             <div class="form-floating mb-3">
                 <label>세부내용</label>
                 <textarea class="form-control" aria-label="세부내용" placeholder="세부내용"></textarea>
+            </div> -->
+
+            <h4 class="container mt-4"><strong>글 작성페이지</strong></h4>
+
+            <div class="container mt-3">
+                <form action="/add" method="POST">
+                    <div class="form-group">
+                        <label>오늘의 할일</label>
+                        <input type="text" class="form-control" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label>날짜</label>
+                        <input type="text" class="form-control" name="date">
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+                </form>
             </div>
 
         </div>
