@@ -35,3 +35,31 @@ app
     console.log(요청.body); // { title: '오늘의 할일', date: '날짜' }
     console.log(요청.body.title); // 오늘의 할일
 })
+
+// REST 원칙
+/*
+1. Uniform Interface (가장 중요)
+    - API 작성 시 간결하고 형식이 일관적이어야 함(하나의 자료는 하나의 URL)
+    - URL 하나를 알면 둘을 알 수 있어야 함
+    - 요청과 응답은 정보가 충분히 들어있어야 함
+2. Client-Server 역할구분
+    - 브라우저는 요청만
+    - 서버는 응답만
+3. Stateless
+    - 각 요청들은 서로 독립적이어야 함
+4. Cacheable
+    - 서버에서 보내주는 정보들은 캐싱이 가능해야 함
+    - 캐싱을 위한 버전 같은 것도 관리 잘해야 함(실은 브라우저가 해줌)
+5. Layered System
+6. Code on Demand
+*/
+
+// 좋은 REST API
+/*
+이름짓기 원칙
+-   URL을 명사로 작성 추천
+-   하위문서 나타낼 때 / 사용
+-   파일확장자(.html) 쓰지말기
+-   띄어쓰기는 대시(-)이용
+-   자료 하나당 하나의 URL
+*/
