@@ -37,4 +37,6 @@ logs
 results
 build
 
+.env
+
 node_modules
