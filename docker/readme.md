@@ -9,6 +9,8 @@
 
 - 호스트OS의 포트 - 컨테이너의 포트 연결만 하면 동작 가능
 - 도커는 리눅스 컨테이너 기술 -> Mac, Window인 경우 가상머신에 설치됨
+    - docker for mac은 xhyve라는 macOS에서 제공하는 가상환경을 이용
+    - docker for windows는 Hyper-V기능을 이용
 
 <br><br>
 
