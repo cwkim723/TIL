@@ -33,11 +33,14 @@ app
 // nodemon server.js
 
 // post 요청으로 서버에 데이터 전송하고 싶으면 form데이터의 경우 input들에 name 작성하기
+// 숙제: 폼 전송 시 데이터 받아서 db에 저장
 app
     .post('/add', function (요청, 응답) {
         응답.send('전송완료');
-        console.log(요청.body); // { title: '오늘의 할일', date: '날짜' }
-        console.log(요청.body.title); // 오늘의 할일
+        // console.log(요청.body); // { title: '오늘의 할일', date: '날짜' }
+        // console.log(요청.body.title); // 오늘의 할일
+
+        db저장하기(요청.body)
     })
 
 // REST 원칙
@@ -77,10 +80,11 @@ MongoClient.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_P
     if (에러) {
         return console.log(에러)
     }
-    db = client.db('todoapp');
+    db = client.db('todoapp'); // database
 
     // insertOne(추가할 자료, 콜백함수)
-    db.collection('post').insertOne({이름: 'John'; _id: 100}, function() {
+    db.collection('post').insertOne({이름: 'John', 나이: 20, _id: 100}, function(에러, 결과) {
+        // object 자료형 저장
         console.log('저장완료');
     })
 
@@ -88,3 +92,25 @@ MongoClient.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_P
         console.log('listening on 8080')
     })
 })
+
+function db저장하기(요청) {
+    let db;
+    console.log('요기야', 요청)
+    MongoClient.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PWD}@study.fm9qhqo.mongodb.net/test
+    `, { useUnifiedTopology: true }, function (에러, client) {
+        if (에러) {
+            return console.log(에러)
+        }
+        db = client.db('todoapp'); // database
+
+        // insertOne(추가할 자료, 콜백함수)
+        db.collection('post').insertOne({title: 요청.title, date: 요청.date}, function(에러, 결과) {
+            // object 자료형 저장
+            console.log('저장완료');
+        })
+
+        app.listen(8080, function () {
+            console.log('listening on 8080')
+        })
+    })
+}
