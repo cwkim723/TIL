@@ -4,6 +4,8 @@ const bodyParser = require('body-parser') // post요청으로 서버에 데이�
 app.use(bodyParser.urlencoded({ extended: true }))
 const env = require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient
+app.set('view engine', 'ejs');
+
 // console.log(process.env.MONGO_ID);
 
 // app.listen(8080, function () {
@@ -40,7 +42,10 @@ app
         // console.log(요청.body); // { title: '오늘의 할일', date: '날짜' }
         // console.log(요청.body.title); // 오늘의 할일
 
-        db저장하기(요청.body)
+        db.collection('post').insertOne({제목: 요청.body.title, 날짜: 요청.body.date}, function(에러, 결과) {
+            // object 자료형 저장
+            console.log('저장완료');
+        })
     })
 
 // REST 원칙
@@ -93,24 +98,8 @@ MongoClient.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_P
     })
 })
 
-function db저장하기(요청) {
-    let db;
-    console.log('요기야', 요청)
-    MongoClient.connect(`mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PWD}@study.fm9qhqo.mongodb.net/test
-    `, { useUnifiedTopology: true }, function (에러, client) {
-        if (에러) {
-            return console.log(에러)
-        }
-        db = client.db('todoapp'); // database
 
-        // insertOne(추가할 자료, 콜백함수)
-        db.collection('post').insertOne({title: 요청.title, date: 요청.date}, function(에러, 결과) {
-            // object 자료형 저장
-            console.log('저장완료');
-        })
-
-        app.listen(8080, function () {
-            console.log('listening on 8080')
-        })
-    })
-}
+// 저장한 데이터 보여주기 GET /list
+app.get('/list', function(요청, 응답){
+    응답.render('list.ejs')
+});
