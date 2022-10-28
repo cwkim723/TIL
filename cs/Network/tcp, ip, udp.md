@@ -92,20 +92,23 @@
                     - 모름
                     - www.google.com이라는 도메인 정보만 앎
                         - 하지만 DNS 프로토콜을 이용해 도메인 정보로 IP 주소를 알아낼 수 있음
+
                         <img width="1005" alt="스크린샷 2022-10-28 오후 3 36 39" src="https://user-images.githubusercontent.com/93105083/198526603-640fc21e-7b70-4abe-a9e0-6007f6c03c28.png">
-                            1. 브라우저는 OS에게 도메인에 대한 IP 주소를 알고 싶다고 요청
-                            2. OS에서 **DNS** 서버로 요청을 보냄
-                                - 어떻게 OS가 DNS 서버를 알지?
-                                    - DNS 서버 주소는 이미 컴퓨터에 등록되어 있음
-                                    - 맥북의 경우 시스템환경설정 - 네트워크 들어가면 볼 수 있음
-                                        <img width="662" alt="스크린샷 2022-10-28 오후 3 45 53" src="https://user-images.githubusercontent.com/93105083/198526667-a32aae23-7773-4a11-b086-5ec90d712d61.png">
-                                - DNS도 Application Layer의 프로토콜(53번 포트)
-                                    <img width="783" alt="스크린샷 2022-10-28 오후 3 53 35" src="https://user-images.githubusercontent.com/93105083/198526672-3ae32d73-6780-4528-a8ca-82b18280db90.png">
-                                    - 도메인이 담긴 쿼리를 도메인 서버로 보냄
-                                    - 도메인 서버가 IP 주소를 응답해줌
-                                - DNS는 Transport Layer에서 UDP 프로토콜 사용
-                                    <img width="546" alt="스크린샷 2022-10-28 오후 3 55 42" src="https://user-images.githubusercontent.com/93105083/198526682-228c63c0-acf2-4637-bbbf-f8312b0f8725.png">
-                                    - UDP는 비연결지향형 프로토콜
+
+                        1. 브라우저는 OS에게 도메인에 대한 IP 주소를 알고 싶다고 요청
+
+                        2. OS에서 **DNS** 서버로 요청을 보냄
+                            - 어떻게 OS가 DNS 서버를 알지?
+                                - DNS 서버 주소는 이미 컴퓨터에 등록되어 있음
+                                - 맥북의 경우 시스템환경설정 - 네트워크 들어가면 볼 수 있음
+                                    <img width="662" alt="스크린샷 2022-10-28 오후 3 45 53" src="https://user-images.githubusercontent.com/93105083/198526667-a32aae23-7773-4a11-b086-5ec90d712d61.png">
+                            - DNS도 Application Layer의 프로토콜(53번 포트)
+                                <img width="783" alt="스크린샷 2022-10-28 오후 3 53 35" src="https://user-images.githubusercontent.com/93105083/198526672-3ae32d73-6780-4528-a8ca-82b18280db90.png">
+                                - 도메인이 담긴 쿼리를 도메인 서버로 보냄
+                                - 도메인 서버가 IP 주소를 응답해줌
+                            - DNS는 Transport Layer에서 UDP 프로토콜 사용
+                                <img width="546" alt="스크린샷 2022-10-28 오후 3 55 42" src="https://user-images.githubusercontent.com/93105083/198526682-228c63c0-acf2-4637-bbbf-f8312b0f8725.png">
+                                - UDP는 비연결지향형 프로토콜
                                     
         - Network Access Layer: Ethernet
             <img width="1303" alt="스크린샷 2022-10-28 오후 3 56 34" src="https://user-images.githubusercontent.com/93105083/198526689-12568708-4b32-4e68-bd3f-180051d002fb.png">
