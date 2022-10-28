@@ -37,7 +37,12 @@ console.log("쿠키 cookie_test 변수에 저장된 값: " + cookie_test);
 <br>
 
 <h3>세션(Session)</h3>
-- 
+
+```javascript
+sessionStorage.setItem("item", "세션저장하기");
+
+sessionStorage.getItem("item");
+```
 
 <br>
 
