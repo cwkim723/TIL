@@ -30,6 +30,11 @@
 
 <br>
 
+<h3>포트(Port)</h3>
+
+![image](https://user-images.githubusercontent.com/93105083/198879717-45ce2914-c005-4833-8d4b-5606233ddcec.png)
+
+
 
 
 
