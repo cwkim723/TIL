@@ -21,6 +21,8 @@
 <h2>TCP/IP</h2>
 <p>인터넷에서 컴퓨터들이 서로 정보를 주고 받는데 쓰이는 프로토콜의 집합</p>
 
+![image](https://user-images.githubusercontent.com/93105083/198883357-278dc026-66d9-46bf-a7b1-ebe20efbc766.png)
+
 <img width="608" alt="스크린샷 2022-10-28 오후 1 55 47" src="https://user-images.githubusercontent.com/93105083/198525729-20fcfa35-72ff-4f55-a54a-ab27c95096e6.png">
 
 - **Application Layer**
