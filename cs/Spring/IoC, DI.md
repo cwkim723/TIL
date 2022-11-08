@@ -501,4 +501,54 @@ public class PayController {
 
 <h3>@Qualifier</h3>
 
+```java
+@Service
+@Qualifier("mainPayService")
+public class NaverPayService implements PayService {
 
+}
+```
+
+```java
+@Controller
+public class PayController {
+    private final PayService payService;
+
+    public PayController(@Qualifier("mainPayService") PayService payService) {
+        this.payService = payService;
+    }
+}
+```
+
+- 지정한 대로 주입됨
+
+<br>
+
+<h3>@Primary</h3>
+
+```java
+@Service
+@Primary
+public class NaverPayService implements PayService {
+
+}
+```
+
+```java
+@Controller
+public class PayController {
+    private final PayService payService;
+
+    public PayController(ayService payService) {
+        this.payService = payService;
+    }
+}
+```
+
+- @Primary가 붙은 bean은 해당 타입으로 의존성 검색 시 우선적으로 주입됨 -> default bean
+
+<br>
+
+<h3>의존성 주입 기준</h3>
+
+- 타입 > @Qualifier > @Primary > 변수 명
