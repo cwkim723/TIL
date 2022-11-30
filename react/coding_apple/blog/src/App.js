@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
@@ -16,9 +18,15 @@ function App() {
       b: state 변경 도와주는 함수
   */
   // state 쓰는 이유 = state가 변경되면 state 쓰던 html은 자동 재렌더링됨 
-  let [글제목, 함수1] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
+  let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동맛집', '파이썬 독학']);
+  // state 변경하는 법 = 등호로 변경 금지
+  let [따봉, 따봉변경] = useState(0);
 
-  let [logo, setLogo] = useState('ReactBlog'); // 블로그 제목은 자주 바뀌는 데이터가 아니므로 하드코딩으로 해도 괜찮음
+  function 함수() {
+    console.log(1);
+  }
+
+  // let [logo, setLogo] = useState('ReactBlog'); // 블로그 제목은 자주 바뀌는 데이터가 아니므로 하드코딩으로 해도 괜찮음
 
   // destructuring 문법
   let num = [1, 2]; // 배열에 있는 것을 변수로 빼고 싶음
@@ -26,10 +34,7 @@ function App() {
 
   
 
-  /* return() 안에는 병렬로 태그 2개 이상 기입금지
-     <div>
-     </div> 가능
-     <div></div> 불가능 */
+  /* return() 안에는 병렬로 태그 2개 이상 기입금지 */
   return (
     <div className="App">
       {/* html이 아니라 jsx임 */}
@@ -38,18 +43,32 @@ function App() {
         <h4>{ post }</h4>
         <h4 id={post} style={{color : 'red', fontSize : '16px'}}>블로그임</h4> */}
       <div className="black-nav">
-        <h4>{ logo }</h4>
+        <h4>ReactBlog</h4>
       </div>
+      <button onClick={ () => { 
+        // 원본 보존을 위해 copy 배열을 만듦
+        // state변경함수의 특징: 기존 state == 신규 state인 경우 변경 안해줌
+        // array/object 특징: 변수는 ram에 저장된 데이터를 가리키는 주소를 담음
+        // 배열 복사를 해도 기존 글제목과 같은 주소를 가짐. -> 기존 state == 신규 state인 경우이므로 변경을 안 해줌
+        let copy = [...글제목]; // 새로운 주소를 참조하도록 함
+        copy[0] = '여자 코트 추천';
+        글제목변경(copy);
+      }}>🔄</button>
+      <button onClick={ () => {
+        let arr = [...글제목];
+        arr.sort();
+        글제목변경(arr);
+      }}>정렬</button>
       <div className='list'>
-        <h4>{ 글제목[0] }</h4>
+        <h4>{ 글제목[0] } <span onClick={ () => { 따봉변경(따봉+1) } }>👍</span> {따봉} </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className='list'>
-      <h4>{ 글제목[1] }</h4>
+        <h4>{ 글제목[1] } <span onClick={ 함수 }>👍</span> {따봉} </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className='list'>
-      <h4>{ 글제목[2] }</h4>
+        <h4>{ 글제목[2] } <span onClick={ function() { console.log(1) } }>👍</span> {따봉} </h4>
         <p>2월 17일 발행</p>
       </div>
     </div>
