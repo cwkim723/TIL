@@ -69,11 +69,11 @@
       )
     }
 
-    const MainCard = (props) => {
-      console.log(props)
+    const MainCard = ({img}) => {
+      // console.log(props)
       return (
         <div class="main-card">
-          <img src={props.children} alt="고양이" width="400" />
+          <img src={img} alt="고양이" width="400" />
           <button>🤍</button>
         </div>
       )
@@ -98,7 +98,7 @@
         <Title>1번째 고양이 가라사대</Title>
         <Title>2번째 고양이 가라사대</Title>
         <Form />
-        <MainCard>https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react</MainCard>
+        <MainCard img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
         <Favorites />
       </div>
     )
