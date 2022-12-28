@@ -33,26 +33,7 @@
 
 <body>
   <div id="app"></div>
-  <!-- <h1>1번째 고양이 가라사대</h1>
-  <form>
-    <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-    <button type="submit">생성</button>
-  </form>
-  <div class="main-card">
-    <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" alt="고양이" width="400" />
-    <button>🤍</button>
-  </div>
-  <ul class="favorites">
-    <li>
-      <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" alt="고양이" />
-    </li>
-    <li>
-      <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" alt="고양이" />
-    </li>
-    <li>
-      <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" alt="고양이" />
-    </li>
-  </ul> -->
+
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -60,43 +41,65 @@
   <script type="text/babel">
     console.log("야옹");
 
-    const catItem = (
-      <li>
-        <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
-      </li>
-    );
+    function CatItem(props) {
+      // 컴포넌트는 대문자로 시작
+      // 리액트에서 인자를 넘겨 주는 것을 props라고 함
+      console.log(props.img);
+      return (
+        <li>
+          <img src={props.img} />
+        </li>
+      );
+    }
 
-    const favorites = (
-      <ul class="favorites">
-        {catItem}{catItem}{catItem}
-      </ul>
-    )
+    // const favorites = (
+    //   <ul class="favorites">
+    //     <CatItem img="https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn" />
+    //     <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
+    //   </ul>
+    // )
     // {}를 쓰면 자바스크립트 문법을 리액트에서도 쓸 수 있음
 
-    const mainCard = (
-      <div class="main-card">
-        <img src="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" alt="고양이" width="400" />
-        <button>🤍</button>
-      </div>
-    )
+    function Favorites() {
+      return (
+        <ul class="favorites">
+          <CatItem img="https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn" />
+          <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
+        </ul>
+      )
+    }
 
-    const h1 = (
-      <h1>1번째 고양이 가라사대</h1>
-    )
+    const MainCard = (props) => {
+      console.log(props)
+      return (
+        <div class="main-card">
+          <img src={props.children} alt="고양이" width="400" />
+          <button>🤍</button>
+        </div>
+      )
+    }
 
-    const form = (
-      <form>
-        <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
-        <button type="submit">생성</button>
-      </form>
-    )
+    const Title = (props) => {
+      // console.log(props); // {children: '1번째 고양이 가라사대'}
+      return <h1>{props.children}</h1>
+    }
+
+    const Form = () => {
+      return (
+        <form>
+          <input type="text" name="name" placeholder="영어 대사를 입력해주세요" />
+          <button type="submit">생성</button>
+        </form>
+      )
+    }
 
     const app = (
       <div>
-        {h1}
-        {form}
-        {mainCard}
-        {favorites}
+        <Title>1번째 고양이 가라사대</Title>
+        <Title>2번째 고양이 가라사대</Title>
+        <Form />
+        <MainCard>https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react</MainCard>
+        <Favorites />
       </div>
     )
       // 상위 하나의 태그만 그릴 수 있으므로 div로 감싸주기
