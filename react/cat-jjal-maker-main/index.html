@@ -47,13 +47,13 @@
       console.log(props.img);
       return (
         <li>
-          <img src={props.img} />
+          <img src={props.img} style={{width: "150px", border: "1px solid red"}} />
         </li>
       );
     }
 
     // const favorites = (
-    //   <ul class="favorites">
+    //   <ul className="favorites">
     //     <CatItem img="https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn" />
     //     <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
     //   </ul>
@@ -62,7 +62,7 @@
 
     function Favorites() {
       return (
-        <ul class="favorites">
+        <ul className="favorites">
           <CatItem img="https://cataas.com/cat/BxqL2EjFmtxDkAm2/says/inflearn" />
           <CatItem img="https://cataas.com/cat/18MD6byVC1yKGpXp/says/JavaScript" />
         </ul>
@@ -72,8 +72,8 @@
     const MainCard = ({img}) => {
       // console.log(props)
       return (
-        <div class="main-card">
-          <img src={img} alt="고양이" width="400" />
+        <div className="main-card">
+          <img src={img} alt="고양 이" width="400" />
           <button>🤍</button>
         </div>
       )
