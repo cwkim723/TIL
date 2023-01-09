@@ -96,10 +96,16 @@
     }
 
     const Form = () => {
+      const [counter, setCounter] = React.useState(1);
+      // const counterState = React.useState(1);
+      // const counter = counterState[0];
+      // const setCounter = counterState[1];
+
       function handleFormSubmit(event) {
         event.preventDefault();
         console.log("폼 전송됨");
-      } 
+        setCounter(counter + 1);
+      }
       
       return (
         <form onSubmit={handleFormSubmit}>
@@ -112,7 +118,6 @@
     const app = (
       <div>
         <Title>1번째 고양이 가라사대</Title>
-        <Title>2번째 고양이 가라사대</Title>
         <Form />
         <MainCard img="https://cataas.com/cat/HSENVDU4ZMqy7KQ0/says/react" />
         <Favorites />
